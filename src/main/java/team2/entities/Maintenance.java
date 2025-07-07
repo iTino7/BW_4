@@ -1,12 +1,29 @@
-package Team_2.entities;
+package team2.entities;
 
+
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Entity
+@Table(name = "maintenance")
 public class Maintenance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "starting_date", nullable = false)
     private LocalDate startingDate;
+    @Column(name = "final_date", nullable = false)
     private LocalDate finalDate;
+
+    @ManyToMany
+    @JoinTable (name = "transports_maintenances",
+    joinColumns = @JoinColumn(name = "maintenance_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "transport_id", nullable = false)
+    )
+    private List<Transport> transportList;
+
 
     public Maintenance () {}
 

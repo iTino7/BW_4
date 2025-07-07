@@ -1,4 +1,4 @@
-package Team_2.entities.enums;
+package team2.entities.enums;
 
 public enum PassType {
     MONTHLY, WEEKLY

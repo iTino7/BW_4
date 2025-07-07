@@ -1,4 +1,4 @@
-package Team_2.entities;
+package team2.entities;
 
 import java.time.LocalDate;
 

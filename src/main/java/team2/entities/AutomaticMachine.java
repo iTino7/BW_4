@@ -1,6 +1,6 @@
-package Team_2.entities;
+package team2.entities;
 
-import Team_2.entities.enums.ResellerStatusType;
+import team2.entities.enums.ResellerStatusType;
 
 public class AutomaticMachine extends Reseller {
 
