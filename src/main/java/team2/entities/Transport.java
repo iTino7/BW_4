@@ -1,19 +1,36 @@
 package team2.entities;
 
+import jakarta.persistence.*;
 import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Entity
+@Table(name = "transports")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "type_of_transportation") DA CHIEDERE A RICCARDO
 public abstract class Transport {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transport_id;
     private int maxPassengers;
 
     private LocalDate firstServiceDay;
 
+    @Enumerated(EnumType.STRING)
     private TransportStatus status;
 
     private int no0fTickets;
+
+    @ManyToMany(mappedBy = "transportList")
+    private List<Maintenance> maintenanceList;
+
+    @ManyToMany(mappedBy = "transportList2")
+    private List<Route> routeList;
+
 
     public Transport() {
     }
