@@ -1,6 +1,6 @@
-package Team_2.entities;
+package team2.entities;
 
-import Team_2.entities.enums.PassType;
+import team2.entities.enums.PassType;
 
 import java.time.LocalDate;
 

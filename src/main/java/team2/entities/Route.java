@@ -1,4 +1,4 @@
-package Team_2.entities;
+package team2.entities;
 
 public class Route {
     private long route_id;
