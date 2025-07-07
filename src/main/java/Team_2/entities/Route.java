@@ -1,7 +1,7 @@
 package Team_2.entities;
 
 public class Route {
-    private long id;
+    private long route_id;
     private String departurePoint;
     private String terminusRoute;
     private double estimatedTime;
