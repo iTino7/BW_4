@@ -1,10 +1,24 @@
 package team2.entities;
 
+import jakarta.persistence.*;
+import org.hibernate.mapping.List;
+
+@Entity
+@Table(name = "route")
 public class Route {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long route_id;
+    @Column(name = "departure_point", nullable = false)
     private String departurePoint;
+    @Column(name = "terminus_route", nullable = false)
     private String terminusRoute;
+    @Column(name = "estimated_time", nullable = false)
     private double estimatedTime;
+
+    @ManyToMany(mappedBy = "")
+    private List<Transport> trasportsList;
+
 
     public Route() {
     }
