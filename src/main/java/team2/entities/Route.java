@@ -1,7 +1,8 @@
 package team2.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.mapping.List;
+
+import java.util.List;
 
 @Entity
 @Table(name = "route")
