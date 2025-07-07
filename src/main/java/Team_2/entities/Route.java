@@ -15,8 +15,8 @@ public class Route {
         this.estimatedTime = estimatedTime;
     }
 
-    public long getId() {
-        return id;
+    public long getRoute_id() {
+        return route_id;
     }
 
     public String getDeparturePoint() {
@@ -46,7 +46,7 @@ public class Route {
     @Override
     public String toString() {
         return "Route{" +
-                "id=" + id +
+                "route_id=" + route_id +
                 ", departurePoint='" + departurePoint + '\'' +
                 ", terminusRoute='" + terminusRoute + '\'' +
                 ", estimatedTime=" + estimatedTime +
