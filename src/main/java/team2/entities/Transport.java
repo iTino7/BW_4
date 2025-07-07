@@ -8,6 +8,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "transports")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "type_of_transportation") DA CHIEDERE A RICCARDO
 public abstract class Transport {
 
 
@@ -25,6 +27,10 @@ public abstract class Transport {
 
     @ManyToMany(mappedBy = "transportList")
     private List<Maintenance> maintenanceList;
+
+    @ManyToMany(mappedBy = "transportList2")
+    private List<Route> routeList;
+
 
     public Transport() {
     }

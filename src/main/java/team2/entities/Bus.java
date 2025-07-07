@@ -1,9 +1,13 @@
 package team2.entities;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
 
+@Entity
+@DiscriminatorValue("Bus")
 public class Bus extends Transport {
     public Bus() {}
 
