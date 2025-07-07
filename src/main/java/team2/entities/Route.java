@@ -16,7 +16,11 @@ public class Route {
     @Column(name = "estimated_time", nullable = false)
     private double estimatedTime;
 
-    @ManyToMany(mappedBy = "")
+    @ManyToMany
+    @JoinTable(name = "transports_routes",
+            joinColumns = @JoinColumn(name = "route_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "transport_id", nullable = false)
+    )
     private List<Transport> trasportsList;
 
 
