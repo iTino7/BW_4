@@ -22,7 +22,7 @@ public class Route {
             joinColumns = @JoinColumn(name = "route_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "transport_id", nullable = false)
     )
-    private List<Transport> trasportsList2;
+    private List<Transport> transportsList2;
 
 
     public Route() {
