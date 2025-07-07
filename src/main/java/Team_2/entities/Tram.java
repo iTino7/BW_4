@@ -8,7 +8,7 @@ public class Tram extends Transport {
     public Tram() {
     }
 
-    public Tram(int max_passengers, TransportStatus status, LocalDate first_service_day, int no_of_tickets) {
-        super(max_passengers, status, first_service_day, no_of_tickets);
+    public Tram(int maxPassengers, TransportStatus status, LocalDate firstServiceDay, int no0fTickets) {
+        super(maxPassengers, status, firstServiceDay, no0fTickets);
     }
 }
