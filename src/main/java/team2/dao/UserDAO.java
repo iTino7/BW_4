@@ -5,6 +5,8 @@ import jakarta.persistence.EntityTransaction;
 import team2.entities.User;
 import team2.exceptions.NotFoundException;
 
+import java.time.LocalDate;
+
 public class UserDAO {
     private final EntityManager entityManager;
 
@@ -34,5 +36,18 @@ public class UserDAO {
         entityManager.remove(found);
         transaction.commit();
         System.out.println("User with id " + found.getId() + " successfully removed!");
+    }
+
+    public void checkCardValidity(long id) {
+        User found = this.findUserByID(id);
+        if (found == null) throw new NotFoundException(id);
+
+        LocalDate dateEx = found.getCard().getExpiringDate();
+
+        if (dateEx.isBefore(LocalDate.now())) {
+            System.out.println("Your card has expired");
+        } else {
+            System.out.println("Your card is valid");
+        }
     }
 }

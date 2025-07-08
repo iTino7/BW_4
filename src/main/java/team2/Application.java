@@ -36,8 +36,8 @@ public class Application {
         TransportDAO td = new TransportDAO(em);
         Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
         Transport tram = new Tram(60, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1993, 10, 30), 276);
-        td.save(bus);
-        td.save(tram);
+        //td.save(bus);
+        //td.save(tram);
         Transport busFromDB = td.findById(1);
         Transport tramFromDB = td.findById(2);
 
@@ -47,24 +47,24 @@ public class Application {
         TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now());
         TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now());
 
-        ttd.save(ticket1);
-        ttd.save(ticket2);
-        ttd.save(pass1);
-        ttd.save(pass2);
+        //ttd.save(ticket1);
+        //ttd.save(ticket2);
+        //ttd.save(pass1);
+        //ttd.save(pass2);
 
         RouteDAO rd = new RouteDAO(em);
         Route route1 = new Route("Central Station", "Bridge", 25.10);
         Route route2 = new Route("Middle Town", "Up Town", 48.12);
 
-        rd.save(route1);
-        rd.save(route2);
+        //rd.save(route1);
+        //rd.save(route2);
 
         MaintenanceDAO md = new MaintenanceDAO(em);
         Maintenance maintenance1 = new Maintenance(LocalDate.of(2025, 2, 5), LocalDate.of(2025, 2, 12), busFromDB);
         Maintenance maintenance2 = new Maintenance(LocalDate.of(2025, 3, 8), null, tramFromDB);
 
-        md.save(maintenance1);
-        md.save(maintenance2);
+        //md.save(maintenance1);
+        //md.save(maintenance2);
 
         System.out.println("Hello World!");
 

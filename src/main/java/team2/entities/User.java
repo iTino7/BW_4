@@ -26,6 +26,14 @@ public class User {
 
     ;
 
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
     public long getId() {
         return id;
     }
