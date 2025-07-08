@@ -2,6 +2,6 @@ package team2.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(long id) {
-        super("Il record con id " + id + " non è stato trovato!");
+        super("Record with id " + id + " not found!");
     }
 }
