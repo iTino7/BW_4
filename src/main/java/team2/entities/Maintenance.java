@@ -13,7 +13,7 @@ public class Maintenance {
     private long id;
     @Column(name = "starting_date", nullable = false)
     private LocalDate startingDate;
-    @Column(name = "final_date", nullable = false)
+    @Column(name = "final_date")
     private LocalDate finalDate;
 
     @ManyToOne
