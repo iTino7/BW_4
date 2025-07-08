@@ -3,6 +3,7 @@ package team2.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "travel_tickets")
@@ -16,7 +17,11 @@ public abstract class TravelTicket {
     @Column (name = "issued_date")
     private LocalDate issuedDate;
 
-    public TravelTicket() {}
+    @ManyToMany(mappedBy = "travelTicketList")
+    private List<Reseller> resellerList;
+
+    public TravelTicket() {
+    }
 
     public TravelTicket(LocalDate issuedDate) {
         this.issuedDate = issuedDate;

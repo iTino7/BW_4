@@ -3,6 +3,9 @@ package team2.entities;
 import jakarta.persistence.*;
 import team2.entities.enums.ResellerStatusType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "resellers")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -22,6 +25,13 @@ public abstract class Reseller {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     protected ResellerStatusType status;
+
+
+    @ManyToMany
+    @JoinTable(name = "resellers_tickets", joinColumns = @JoinColumn(name = "reseller_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "travel_ticket_id", nullable = false)
+    )
+    private List<TravelTicket> travelTicketList;
 
 
     public Reseller() {
