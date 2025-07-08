@@ -14,6 +14,9 @@
         <class>team2.entities.Reseller</class>
         <class>team2.entities.AutomaticMachine</class>
         <class>team2.entities.AuthorizedReseller</class>
+        <class>team2.entities.TravelTicket</class>
+        <class>team2.entities.Ticket</class>
+        <class>team2.entities.Pass</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_4"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
