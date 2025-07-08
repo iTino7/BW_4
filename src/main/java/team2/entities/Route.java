@@ -10,10 +10,13 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long route_id;
+
     @Column(name = "departure_point", nullable = false)
     private String departurePoint;
+
     @Column(name = "terminus_route", nullable = false)
     private String terminusRoute;
+
     @Column(name = "estimated_time", nullable = false)
     private double estimatedTime;
 
