@@ -6,6 +6,7 @@ import jakarta.persistence.Persistence;
 import team2.dao.*;
 import team2.entities.*;
 import team2.entities.enums.PassType;
+import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
 
@@ -23,17 +24,35 @@ public class Application {
         CardDAO cd = new CardDAO(em);
         Card card1 = new Card(LocalDate.now(), user1FromDB);
 
+        TransportDAO td = new TransportDAO(em);
+
+        Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
+
+        Transport tram = new Tram(60, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1993, 10, 30), 276);
+
+
+        Transport foundTransport = td.findById(2);
+        System.out.println("id found: " + foundTransport);
+
+        //td.findByIdAndDelete(2);
+
+
+
+        //td.save(tram);
+        //td.save(bus);
+
+
         //ud.saveUser(user1);
         //cd.saveCard(card1);
 
-        TravelTicketDAO td = new TravelTicketDAO(em);
+        TravelTicketDAO ttd = new TravelTicketDAO(em);
 //
 //        TravelTicket ticket1 = new Ticket(LocalDate.now());
 //
 //        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now());
 //
-//        td.save(ticket1);
-//        td.save(pass1);
+//        ttd.save(ticket1);
+//        ttd.save(pass1);
 
 
 
@@ -42,5 +61,8 @@ public class Application {
 
 
         System.out.println("Hello World!");
+
+        em.close();
+        emf.close();
     }
 }

@@ -33,7 +33,7 @@ public class TransportDAO {
             t.begin();
             em.remove(found);
             t.commit();
-            System.out.println("commento");
+            System.out.println("id delete");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
