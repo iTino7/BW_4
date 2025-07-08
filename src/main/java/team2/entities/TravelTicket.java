@@ -1,10 +1,16 @@
 package team2.entities;
 
+import jakarta.persistence.ManyToMany;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public abstract class TravelTicket {
     protected long id;
     private LocalDate issuedDate;
+
+    @ManyToMany(mappedBy = "travelTicketList")
+    private List<Reseller> resellerList;
 
     public TravelTicket() {
     }
