@@ -29,6 +29,14 @@ public class Application {
 
         Transport tram = new Tram(60, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1993, 10, 30), 276);
 
+
+        Transport foundTransport = td.findById(2);
+        System.out.println("id found: " + foundTransport);
+
+        //td.findByIdAndDelete(2);
+
+
+
         //td.save(tram);
         //td.save(bus);
 
