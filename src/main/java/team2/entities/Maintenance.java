@@ -4,7 +4,6 @@ package team2.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "maintenance")
@@ -25,9 +24,10 @@ public class Maintenance {
     public Maintenance() {
     }
 
-    public Maintenance(LocalDate startingDate, LocalDate finalDate) {
+    public Maintenance(LocalDate startingDate, LocalDate finalDate, Transport vehicles) {
         this.startingDate = startingDate;
         this.finalDate = finalDate;
+        this.vehicles = vehicles;
     }
 
     public long getId() {
