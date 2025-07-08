@@ -1,13 +1,22 @@
 package team2.entities;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "travel_tickets")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type_of_tickets")
 public abstract class TravelTicket {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
+
+    @Column (name = "issued_date")
     private LocalDate issuedDate;
 
-    public TravelTicket() {
-    }
+    public TravelTicket() {}
 
     public TravelTicket(LocalDate issuedDate) {
         this.issuedDate = issuedDate;

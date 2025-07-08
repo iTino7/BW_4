@@ -1,7 +1,12 @@
 package team2.entities;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
 import java.time.LocalDate;
 
+@Entity
+@DiscriminatorValue("Ticket")
 public class Ticket extends TravelTicket {
     private boolean isActive;
 

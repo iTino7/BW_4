@@ -1,15 +1,19 @@
 package team2.entities;
 
+import jakarta.persistence.*;
 import team2.entities.enums.PassType;
 
 import java.time.LocalDate;
 
+@Entity
+@DiscriminatorValue("Pass")
 public class Pass extends TravelTicket {
+    @Enumerated(EnumType.STRING)
     private PassType passType;
+    @Column (name = "expiring_date")
     private LocalDate expiringDate;
 
-    public Pass() {
-    }
+    public Pass() {}
 
     public Pass(PassType passType, LocalDate expiringDate, LocalDate issuedDate) {
         super(issuedDate);
