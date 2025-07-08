@@ -19,4 +19,12 @@ public class Ticket extends TravelTicket {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "isActive=" + isActive +
+                ", id=" + id +
+                '}';
+    }
 }

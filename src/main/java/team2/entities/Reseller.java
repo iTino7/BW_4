@@ -49,4 +49,14 @@ public abstract class Reseller {
     public void setIssued_passes(long issued_passes) {
         this.issued_passes = issued_passes;
     }
+
+    @Override
+    public String toString() {
+        return "Reseller{" +
+                "reseller_id=" + reseller_id +
+                ", issued_tickets=" + issued_tickets +
+                ", issued_passes=" + issued_passes +
+                ", status=" + status +
+                '}';
+    }
 }

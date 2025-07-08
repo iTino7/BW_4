@@ -7,16 +7,16 @@ import team2.exceptions.NotFoundException;
 
 public class TransportDAO {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public TransportDAO(EntityManager em) {
         this.em = em;
     }
 
-    public void save(Transport transport) {
+    public void save(Transport newTransport) {
         EntityTransaction et = em.getTransaction();
         et.begin();
-        em.persist(transport);
+        em.persist(newTransport);
         et.commit();
     }
 
@@ -26,5 +26,17 @@ public class TransportDAO {
         return found;
     }
 
+    public void findByIdAndDelete(long id) {
+        try {
+            Transport found = this.findById(id);
+            EntityTransaction t = em.getTransaction();
+            t.begin();
+            em.remove(found);
+            t.commit();
+            System.out.println("commento");
 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

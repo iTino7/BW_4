@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "transports")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "type_of_transportation") //DA CHIEDERE A RICCARDO
+@DiscriminatorColumn(name = "type_of_transportation")
 public abstract class Transport {
 
 
@@ -26,7 +26,7 @@ public abstract class Transport {
     @Column(name = "number_of_tickets")
     private int no0fTickets;
 
-    @ManyToMany(mappedBy = "transportList")
+    @OneToMany(mappedBy = "vehicles")
     private List<Maintenance> maintenanceList;
 
     @ManyToMany(mappedBy = "transportsList2")

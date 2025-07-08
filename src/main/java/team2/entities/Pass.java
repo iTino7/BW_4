@@ -21,8 +21,24 @@ public class Pass extends TravelTicket {
         return passType;
     }
 
+    public void setPassType(PassType passType) {
+        this.passType = passType;
+    }
+
     public LocalDate getExpiringDate() {
         return expiringDate;
     }
 
+    public void setExpiringDate(LocalDate expiringDate) {
+        this.expiringDate = expiringDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Pass{" +
+                "passType=" + passType +
+                ", expiringDate=" + expiringDate +
+                ", id=" + id +
+                '}';
+    }
 }

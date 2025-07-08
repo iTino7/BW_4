@@ -9,6 +9,8 @@
         <class>team2.entities.Route</class>
         <class>team2.entities.User</class>
         <class>team2.entities.Card</class>
+        <class>team2.entities.Bus</class>
+        <class>team2.entities.Tram</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BW_4"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>

@@ -17,15 +17,13 @@ public class Maintenance {
     @Column(name = "final_date", nullable = false)
     private LocalDate finalDate;
 
-    @ManyToMany
-    @JoinTable (name = "transports_maintenances",
-    joinColumns = @JoinColumn(name = "maintenance_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "transport_id", nullable = false)
-    )
-    private List<Transport> transportList;
+    @ManyToOne
+    @JoinColumn(name = "transport_id", nullable = false)
+    private Transport vehicles;
 
 
-    public Maintenance () {}
+    public Maintenance() {
+    }
 
     public Maintenance(LocalDate startingDate, LocalDate finalDate) {
         this.startingDate = startingDate;

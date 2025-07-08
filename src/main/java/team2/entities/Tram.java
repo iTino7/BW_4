@@ -15,4 +15,6 @@ public class Tram extends Transport {
     public Tram(int maxPassengers, TransportStatus status, LocalDate firstServiceDay, int no0fTickets) {
         super(maxPassengers, status, firstServiceDay, no0fTickets);
     }
+
+
 }

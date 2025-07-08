@@ -9,9 +9,12 @@ import java.time.LocalDate;
 @Entity
 @DiscriminatorValue("Bus")
 public class Bus extends Transport {
-    public Bus() {}
+    public Bus() {
+    }
 
-    public Bus (int maxPassengers, TransportStatus status, LocalDate firstServiceDay, int no0fTickets) {
+    public Bus(int maxPassengers, TransportStatus status, LocalDate firstServiceDay, int no0fTickets) {
         super(maxPassengers, status, firstServiceDay, no0fTickets);
     }
+
+
 }
