@@ -9,6 +9,10 @@ import team2.entities.enums.PassType;
 import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
+import team2.dao.RouteDAO;
+import team2.dao.UserDAO;
+import team2.entities.Route;
+import team2.entities.User;
 
 public class Application {
 
@@ -41,6 +45,10 @@ public class Application {
         //td.save(tram);
         //td.save(bus);
 
+        RouteDAO rt = new RouteDAO(em);
+        Route route1 = new Route("Stazione", "Ponte", 25.10);
+
+        //rt.save(route1);
 
         //ud.saveUser(user1);
         //cd.saveCard(card1);
