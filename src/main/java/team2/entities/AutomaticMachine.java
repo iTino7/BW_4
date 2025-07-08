@@ -11,11 +11,9 @@ public class AutomaticMachine extends Reseller {
     public AutomaticMachine() {
     }
 
-    ;
-
-    public AutomaticMachine(ResellerStatusType status) {
-        super(status);
+    public AutomaticMachine(ResellerStatusType status, int issuedTicket, int issuedPasses) {
+        super(status, issuedTicket, issuedPasses);
     }
 
-    ;
+    ;;
 }

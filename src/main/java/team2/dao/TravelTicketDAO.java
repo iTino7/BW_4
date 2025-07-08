@@ -40,4 +40,7 @@ public class TravelTicketDAO {
         System.out.println("Ticket " + found.getId() + " rimosso correttamente!");
 
     }
+
+//    Tieni traccia del numero di biglietti/abbonamenti emessi in un determinato periodo di tempo e per il rivenditore.
+
 }
