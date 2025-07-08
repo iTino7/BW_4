@@ -17,7 +17,7 @@ public class Card {
     private LocalDate expiringDate;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     private User owner;
 
     public Card() {
@@ -25,7 +25,8 @@ public class Card {
 
     ;
 
-    public Card(LocalDate activationDate) {
+    public Card(LocalDate activationDate, User owner) {
+        this.owner = owner;
         this.activationDate = activationDate;
         this.expiringDate = activationDate.plusYears(1);
     }
