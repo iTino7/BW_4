@@ -10,11 +10,9 @@ public class AuthorizedReseller extends Reseller {
     public AuthorizedReseller() {
     }
 
-    ;
-
-    public AuthorizedReseller(ResellerStatusType status) {
-        super(status);
+    public AuthorizedReseller(ResellerStatusType status, int issuedTicket, int issuedPasses) {
+        super(status, issuedTicket, issuedPasses);
     }
 
-    ;
+
 }

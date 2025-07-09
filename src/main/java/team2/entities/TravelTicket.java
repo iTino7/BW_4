@@ -30,6 +30,11 @@ public abstract class TravelTicket {
         return id;
     }
 
+
+    public List<Reseller> getResellerList() {
+        return resellerList;
+    }
+
     public LocalDate getIssuedDate() {
         return issuedDate;
     }

@@ -33,21 +33,29 @@ public abstract class Reseller {
     public Reseller() {
     }
 
-    ;
 
-    public Reseller(ResellerStatusType status) {
+
+    public Reseller(ResellerStatusType status, int issuedTicket, int issuedPasses) {
         this.status = status;
-        this.issuedTicket = 0;
-        this.issuedPasses = 0;
+        this.issuedTicket = issuedTicket;
+        this.issuedPasses = issuedPasses;
 
     }
 
-    ;
+
 
     public long getResellerId() {
         return resellerId;
     }
 
+
+    public List<TravelTicket> getTravelTicketList() {
+        return travelTicketList;
+    }
+
+    public void setTravelTicketList(List<TravelTicket> travelTicketList) {
+        this.travelTicketList = travelTicketList;
+    }
 
     public long getIssuedTicket() {
         return issuedTicket;
