@@ -21,7 +21,7 @@ public abstract class TravelTicket {
     private Reseller reseller;
 
     @OneToMany(mappedBy = "ticket")
-    private List<Transport> transportList;
+    private List<TransportTravelTicket> transportList;
 
     public TravelTicket() {
     }

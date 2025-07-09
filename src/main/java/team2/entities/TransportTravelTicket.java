@@ -15,14 +15,14 @@ public class TransportTravelTicket {
     private Transport transport;
     @ManyToOne
     @JoinColumn(name = "travel_ticket_id", nullable = false)
-    private Ticket ticket;
+    private TravelTicket ticket;
     @Column(name = "validation_dates")
     private LocalDate validationDate;
 
     public TransportTravelTicket() {
     }
 
-    public TransportTravelTicket(Transport transport, Ticket ticket, LocalDate validationDate ) {
+    public TransportTravelTicket(Transport transport, TravelTicket ticket, LocalDate validationDate) {
         this.transport = transport;
         this.ticket = ticket;
         this.validationDate = validationDate;
@@ -40,7 +40,7 @@ public class TransportTravelTicket {
         this.transport = transport;
     }
 
-    public Ticket getTicket() {
+    public TravelTicket getTicket() {
         return ticket;
     }
 
