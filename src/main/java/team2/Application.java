@@ -43,16 +43,29 @@ public class Application {
         Transport busFromDB = td.findById(1);
         Transport tramFromDB = td.findById(2);
 
-        TravelTicketDAO ttd = new TravelTicketDAO(em);
-        TravelTicket ticket1 = new Ticket(LocalDate.now());
-        TravelTicket ticket2 = new Ticket(LocalDate.now());
-        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now());
-        TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now());
+        ResellerDAO rld = new ResellerDAO(em);
+        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10);
+        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20);
+        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30);
+        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40);
 
-        ttd.save(ticket1);
-        ttd.save(ticket2);
-        ttd.save(pass1);
-        ttd.save(pass2);
+//        rld.save(tabacchi1);
+//        rld.save(tabacchi2);
+//        rld.save(atm1);
+//        rld.save(atm2);
+
+        Reseller resellerFromDB = rld.findById(1);
+
+        TravelTicketDAO ttd = new TravelTicketDAO(em);
+        TravelTicket ticket1 = new Ticket(LocalDate.now(), resellerFromDB);
+        TravelTicket ticket2 = new Ticket(LocalDate.now(), resellerFromDB);
+        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
+        TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
+
+//        ttd.save(ticket1);
+//        ttd.save(ticket2);
+//        ttd.save(pass1);
+//        ttd.save(pass2);
 
         RouteDAO rd = new RouteDAO(em);
         Route route1 = new Route("Central Station", "Bridge", 25.10);
@@ -60,24 +73,12 @@ public class Application {
         Route route3 = new Route("Central Park", "Lake", 15.30);
         Route route4 = new Route("Cathedral", "Hospital", 35.50);
 
-        rd.save(route1);
-        rd.save(route2);
-        rd.save(route3);
-        rd.save(route4);
+        //rd.save(route1);
+        //rd.save(route2);
+        //rd.save(route3);
+        //rd.save(route4);
         Route route1FromDB = rd.findById(1);
         Route route2FromDB = rd.findById(2);
-
-        ResellerDAO rld = new ResellerDAO(em);
-        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10);
-        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20);
-        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30);
-        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40);
-
-        //rld.save(tabacchi1);
-        //rld.save(tabacchi2);
-        //rld.save(atm1);
-        //rld.save(atm2);
-
 
         MaintenanceDAO md = new MaintenanceDAO(em);
         Maintenance maintenance1 = new Maintenance(LocalDate.of(2025, 2, 5), LocalDate.of(2025, 2, 12), busFromDB);
@@ -93,56 +94,17 @@ public class Application {
         TransportRoute transportRoutes4 = new TransportRoute(route2FromDB, busFromDB, 47.10, LocalDateTime.now().minusMinutes(30));
         TransportRoute transportRoutes5 = new TransportRoute(route2FromDB, busFromDB, 49.10, LocalDateTime.now().minusMinutes(15));
 
-        trd.save(transportRoutes1);
-        trd.save(transportRoutes2);
-        trd.save(transportRoutes3);
-        trd.save(transportRoutes4);
-        trd.save(transportRoutes5);
+        //trd.save(transportRoutes1);
+        //trd.save(transportRoutes2);
+        //trd.save(transportRoutes3);
+        //trd.save(transportRoutes4);
+        //trd.save(transportRoutes5);
 
 
         System.out.println("**************** METODO CERCA N.OF TICKET *******************");
 
-        //Venditore 1
-//        TravelTicket ticketFromDB1 = ttd.findById(3);
-//        TravelTicket ticketFromDB2 = ttd.findById(4);
-////        TravelTicket passFromDB1 = ttd.findById(5);
-////        TravelTicket passFromDB2 = ttd.findById(6);
-//
-//        Reseller resellerFromDB = rld.findById(1);
-//        Reseller resellerFromDB2 = rld.findById(2);
-//
-//        List<TravelTicket> ticketList = new ArrayList<>();
-//        ticketList.add(ticketFromDB1);
-//        ticketList.add(ticketFromDB2);
-//        ticketList.add(passFromDB1);
-//        ticketList.add(passFromDB2);
-//
-//        resellerFromDB.setTravelTicketList(ticketList);
-//
-//        rld.save(resellerFromDB);
-
-        //Venditore 2
-
-//        TravelTicket ticketFromDB1 = ttd.findById(3);
-//        TravelTicket ticketFromDB2 = ttd.findById(4);
-//       TravelTicket passFromDB1 = ttd.findById(5);
-//       TravelTicket passFromDB2 = ttd.findById(6);
-//
-//        Reseller resellerFromDB = rld.findById(1);
-//        Reseller resellerFromDB2 = rld.findById(2);
-//
-//        List<TravelTicket> ticketList = new ArrayList<>();
-//        ticketList.add(ticketFromDB1);
-//        ticketList.add(ticketFromDB2);
-//        ticketList.add(passFromDB1);
-//        ticketList.add(passFromDB2);
-//
-//        resellerFromDB.setTravelTicketList(ticketList);
-//
-//        rld.save(resellerFromDB);
-
-        long count = rld.countByResellerAndPeriod(1, LocalDate.of(2024, 10, 1), LocalDate.now(), "Ticket");
-        System.out.println("Biglietti emessi dal rivenditore 1: " + count);
+        rld.countTicketAndPassesByReseller(1);
+        ttd.countTravelTicketByPeriod(LocalDate.of(2025, 1, 1), LocalDate.of(2025, 12, 31));
 
         System.out.println("************ MAINTENANCES PER VEHICLE ************");
 

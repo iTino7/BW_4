@@ -6,8 +6,6 @@ import jakarta.persistence.TypedQuery;
 import team2.entities.Reseller;
 import team2.exceptions.NotFoundException;
 
-import java.time.LocalDate;
-
 public class ResellerDAO {
     private final EntityManager entityManager;
 
@@ -44,33 +42,25 @@ public class ResellerDAO {
 
     }
 
-    public long countByResellerAndPeriod(long resellerId, LocalDate startDate, LocalDate endDate, String type) {
+    public void countTicketAndPassesByReseller(long resellerId) {
         Reseller found = this.findById(resellerId);
-        long ticketType;
-        String ticketTypeQuery = "";
 
+        TypedQuery<Long> firstQuery = entityManager.createQuery(
+                "SELECT COUNT(t) FROM Reseller r JOIN r.travelTicketList t WHERE r.resellerId = :resellerId AND TYPE(t) = Pass",
+                Long.class);
+        TypedQuery<Long> secondQuery = entityManager.createQuery(
+                "SELECT COUNT(t) FROM Reseller r JOIN r.travelTicketList t WHERE r.resellerId = :resellerId AND TYPE(t) = Ticket",
+                Long.class);
 
-        if (type.equals("Pass")) {
-            ticketTypeQuery = "AND TYPE(t) = Pass";
-            ticketType = found.getIssuedPasses();
-        } else {
-            ticketTypeQuery = "AND TYPE(t) = Ticket";
-            ticketType = found.getIssuedTicket();
+        firstQuery.setParameter("resellerId", resellerId);
+        secondQuery.setParameter("resellerId", resellerId);
+
+        Long passCount = firstQuery.getSingleResultOrNull();
+        Long ticketCount = secondQuery.getSingleResultOrNull();
+        if (passCount == null || ticketCount == null) {
+            System.out.println("Ops.. Qualcosa è andato storto.");
         }
-
-        TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(t) FROM Reseller r JOIN r.travelTicketList t " +
-                        "WHERE r.resellerId = :resellerId AND t.issuedDate BETWEEN :startDate AND :endDate " + ticketTypeQuery,
-                Long.class
-        );
-        query.setParameter("resellerId", resellerId);
-        query.setParameter("startDate", startDate);
-        query.setParameter("endDate", endDate);
-
-        Long count = query.getSingleResult();
-
-
-        return count + ticketType;
+        System.out.println("Il venditore con id " + resellerId + " ha venduto " + (passCount + found.getIssuedPasses()) + " abbonamenti e " + (ticketCount + found.getIssuedTicket()) + " biglietti.");
     }
 
 }

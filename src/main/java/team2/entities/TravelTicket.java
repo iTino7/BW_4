@@ -17,12 +17,14 @@ public abstract class TravelTicket {
     private LocalDate issuedDate;
 
     @ManyToOne
+    @JoinColumn(name = "reseller_id")
     private Reseller reseller;
 
     public TravelTicket() {
     }
 
-    public TravelTicket(LocalDate issuedDate) {
+    public TravelTicket(LocalDate issuedDate, Reseller reseller) {
+        this.reseller = reseller;
         this.issuedDate = issuedDate;
     }
 

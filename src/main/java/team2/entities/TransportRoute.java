@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transportss_routes")
+@Table(name = "transports_routes")
 public class TransportRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
