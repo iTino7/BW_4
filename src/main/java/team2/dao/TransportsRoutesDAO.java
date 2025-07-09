@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import team2.entities.TransportRoute;
+import team2.exceptions.NoResultException;
 import team2.exceptions.NotFoundException;
 
 public class TransportsRoutesDAO {
@@ -28,10 +29,20 @@ public class TransportsRoutesDAO {
     }
 
     public long countRunsByTransportAndRoute(long transportId, long routeId) {
-        TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(rr) FROM TransportRoute rr WHERE rr.transports.transport_id = :transportId AND rr.routes.route_id = :routeId", Long.class);
+        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(rr) FROM TransportRoute rr WHERE rr.transports.transport_id = :transportId AND rr.routes.route_id = :routeId", Long.class);
         query.setParameter("transportId", transportId);
         query.setParameter("routeId", routeId);
         return query.getSingleResult();
+    }
+
+    public Double currentAverageTime(long transportId, long routeId) {
+        TypedQuery<Double> query = entityManager.createQuery("SELECT AVG(rr.actualTimeMin) FROM TransportRoute rr WHERE rr.transports.transport_id = :transportId AND rr.routes.route_id = :routeId", Double.class);
+        query.setParameter("transportId", transportId);
+        query.setParameter("routeId", routeId);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
