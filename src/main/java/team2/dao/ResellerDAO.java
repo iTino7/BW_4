@@ -45,15 +45,33 @@ public class ResellerDAO {
 
     }
 
-    public int howManyTicketPerPeriod(LocalDate firstDate, LocalDate secondDate) {
-        int sum = 0;
-        TypedQuery<Reseller> query = entityManager.createQuery("SELECT r FROM Reseller r JOIN travelTicketList WHERE r.travelTicketList.element(issuedDate) BETWEEN :firstDate AND :secondDate" , Reseller.class );
-        query.setParameter("firstDate" , firstDate);
-        query.setParameter("secondDate" , secondDate);
-        List<Reseller> found = query.getResultList();
-        for (Reseller reseller : found) {
-            sum++;
+    public long countByResellerAndPeriod(long resellerId, LocalDate startDate, LocalDate endDate, String type) {
+        Reseller found = this.findById(resellerId);
+        long ticketType;
+        String ticketTypeQuery = "";
+
+
+        if (type.equals("Pass")) {
+            ticketTypeQuery = "AND TYPE(t) = Pass";
+            ticketType = found.getIssuedPasses();
+        } else {
+            ticketTypeQuery = "AND TYPE(t) = Ticket";
+            ticketType = found.getIssuedTicket();
         }
-        return sum;
+
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(t) FROM Reseller r JOIN r.travelTicketList t " +
+                        "WHERE r.resellerId = :resellerId AND t.issuedDate BETWEEN :startDate AND :endDate " + ticketTypeQuery ,
+                Long.class
+        );
+        query.setParameter("resellerId", resellerId);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
+
+        Long count = query.getSingleResult();
+
+
+        return count + ticketType;
     }
+
 }

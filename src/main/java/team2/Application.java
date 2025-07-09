@@ -10,6 +10,8 @@ import team2.entities.enums.ResellerStatusType;
 import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
 
@@ -61,10 +63,10 @@ public class Application {
 //        rd.save(route2);
 
         ResellerDAO rld = new ResellerDAO(em);
-        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10);
-        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20);
-        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30);
-        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40);
+        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10 );
+        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20 );
+        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30 );
+        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40 );
 
 //        rld.save(tabacchi1);
 //        rld.save(tabacchi2);
@@ -82,25 +84,52 @@ public class Application {
 
         System.out.println("**************** METODO CERCA N.OF TICKET *******************");
 
-//        TravelTicket ticketFromDB1 = ttd.findById(1);
-//        TravelTicket ticketFromDB2 = ttd.findById(2);
+        //Venditore 1
+//        TravelTicket ticketFromDB1 = ttd.findById(3);
+//        TravelTicket ticketFromDB2 = ttd.findById(4);
+////        TravelTicket passFromDB1 = ttd.findById(5);
+////        TravelTicket passFromDB2 = ttd.findById(6);
 //
 //        Reseller resellerFromDB = rld.findById(1);
+//        Reseller resellerFromDB2 = rld.findById(2);
 //
 //        List<TravelTicket> ticketList = new ArrayList<>();
 //        ticketList.add(ticketFromDB1);
 //        ticketList.add(ticketFromDB2);
+//        ticketList.add(passFromDB1);
+//        ticketList.add(passFromDB2);
 //
 //        resellerFromDB.setTravelTicketList(ticketList);
 //
 //        rld.save(resellerFromDB);
+
+        //Venditore 2
+
+//        TravelTicket ticketFromDB1 = ttd.findById(3);
+//        TravelTicket ticketFromDB2 = ttd.findById(4);
+//       TravelTicket passFromDB1 = ttd.findById(5);
+//       TravelTicket passFromDB2 = ttd.findById(6);
 //
-//        int number = rld.howManyTicketPerPeriod(LocalDate.now().minusDays(30), LocalDate.now().plusDays(20));
-//        System.out.println(number);
+//        Reseller resellerFromDB = rld.findById(1);
+//        Reseller resellerFromDB2 = rld.findById(2);
+//
+//        List<TravelTicket> ticketList = new ArrayList<>();
+//        ticketList.add(ticketFromDB1);
+//        ticketList.add(ticketFromDB2);
+//        ticketList.add(passFromDB1);
+//        ticketList.add(passFromDB2);
+//
+//        resellerFromDB.setTravelTicketList(ticketList);
+//
+//        rld.save(resellerFromDB);
+
+        long count = rld.countByResellerAndPeriod(1, LocalDate.of(2024, 10, 1), LocalDate.now(), "Ticket");
+        System.out.println("Biglietti emessi dal rivenditore 1: " + count);
 
         System.out.println("************ MAINTENANCES PER VEHICLE ************");
 
         td.getServicePeriodByID(1);
+
 
         System.out.println("Hello World!");
 
