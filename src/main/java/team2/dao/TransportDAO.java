@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import team2.entities.Maintenance;
+import team2.entities.Ticket;
 import team2.entities.Transport;
 import team2.exceptions.NotFoundException;
 
@@ -85,21 +86,44 @@ public class TransportDAO {
 
     public void countByTransportAndPeriod(long transportId, LocalDate startDate, LocalDate endDate) {
         Transport found = this.findById(transportId);
+        if (found == null) {
+            System.out.println("Transport non trovato con id: " + transportId);
+            return;
+        }
 
         TypedQuery<Long> query = em.createQuery(
-                "SELECT COUNT(t) FROM Transport tr JOIN tr.transportTravelTickets t " +
-                        "WHERE tr.transportId = :transportId AND :validationDate BETWEEN :startDate AND :endDate ",
-                Long.class
-        );
+                        "SELECT COUNT(tt) FROM Transport tr JOIN tr.transportTravelTickets tt " +
+                                "JOIN tt.ticket t " +
+                                "WHERE tr.id = :transportId " +
+                                "AND t.isActive = false " +
+                                "AND tt.validationDate BETWEEN :startDate AND :endDate",
+                        Long.class
+                );
         query.setParameter("transportId", transportId);
         query.setParameter("startDate", startDate);
         query.setParameter("endDate", endDate);
 
         Long count = query.getSingleResult();
 
-
-        System.out.println("Boh è una prova " + count);
+        System.out.println("Numero biglietti convalidati: " + count);
     }
+
+    public void invalidateTicket(long ticketId) {
+        em.getTransaction().begin();
+
+        Ticket ticket = em.find(Ticket.class, ticketId);
+        if (ticket != null && ticket.isActive()) {
+            ticket.setActive(false);
+            em.merge(ticket);
+            System.out.println("Ticket con id " + ticketId + " convalidato");
+        } else {
+            System.out.println("Ticket non trovato o già non attivo.");
+        }
+
+        em.getTransaction().commit();
+    }
+
+
 
 
 }

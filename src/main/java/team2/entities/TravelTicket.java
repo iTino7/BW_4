@@ -26,8 +26,9 @@ public abstract class TravelTicket {
     public TravelTicket() {
     }
 
-    public TravelTicket(LocalDate issuedDate) {
+    public TravelTicket(LocalDate issuedDate, Reseller reseller) {
         this.issuedDate = issuedDate;
+        this.reseller = reseller;
     }
 
     public long getId() {

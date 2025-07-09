@@ -12,8 +12,8 @@ public class Ticket extends TravelTicket {
 
     public Ticket () {}
 
-    public Ticket(LocalDate issuedDate) {
-        super(issuedDate);
+    public Ticket(LocalDate issuedDate, Reseller reseller) {
+        super(issuedDate, reseller);
         this.isActive = true;
     }
 
