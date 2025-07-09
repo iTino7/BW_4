@@ -2,7 +2,9 @@ package team2.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import team2.entities.Maintenance;
+import team2.entities.Reseller;
 import team2.entities.Transport;
 import team2.exceptions.NotFoundException;
 
@@ -81,5 +83,24 @@ public class TransportDAO {
         System.out.println("Transport vehicle with id " + id + " has been under maintenance for " + daysUnderMaintenance + " days. Specifically " + this.getMonths(daysUnderMaintenance) + " months, " + getWeeks(daysUnderMaintenance) + " weeks and " + getDays(daysUnderMaintenance) + " days.");
         System.out.println("Transport vehicle with id " + id + " has been in service for " + actualDaysOfService + " days. Specifically " + this.getYears(actualDaysOfService) + " years, " + this.getMonths(actualDaysOfService) + " months, " + this.getWeeks(actualDaysOfService) + " weeks and " + this.getDays(actualDaysOfService) + " days.");
     }
+
+    public long countByTransportAndPeriod(long transportId, LocalDate startDate, LocalDate endDate) {
+        Transport found = this.findById(transportId);
+
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(t) FROM Transport tr JOIN tr.travelTicketList t " +
+                        "WHERE tr.transportId = :transportId AND BETWEEN :startDate AND :endDate ",
+                Long.class
+        );
+        query.setParameter("transportId", transportId);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
+
+        Long count = query.getSingleResult();
+
+
+        return count + ticketType;
+    }
+
 
 }

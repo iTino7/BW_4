@@ -36,6 +36,11 @@ public abstract class Transport {
     private List<TransportRoute> transportRouteList;
 
 
+    @OneToMany(mappedBy = "transport")
+    private List<TravelTicket> travelTicketList;
+
+    
+
     public Transport() {
     }
 

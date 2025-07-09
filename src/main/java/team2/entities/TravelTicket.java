@@ -19,6 +19,9 @@ public abstract class TravelTicket {
     @ManyToOne
     private Reseller reseller;
 
+    @ManyToOne
+    private Transport transport;
+
     public TravelTicket() {
     }
 
@@ -30,12 +33,12 @@ public abstract class TravelTicket {
         return id;
     }
 
-    public void setIssuedDate(LocalDate issuedDate) {
-        this.issuedDate = issuedDate;
-    }
-
     public LocalDate getIssuedDate() {
         return issuedDate;
+    }
+
+    public void setIssuedDate(LocalDate issuedDate) {
+        this.issuedDate = issuedDate;
     }
 
     public Reseller getReseller() {
