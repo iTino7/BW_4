@@ -86,21 +86,48 @@ public class Application {
 
         System.out.println("**************** METODO CERCA N.OF TICKET *******************");
 
-        TravelTicket ticketFromDB1 = ttd.findById(3);
-        TravelTicket ticketFromDB2 = ttd.findById(4);
+        //Venditore 1
+//        TravelTicket ticketFromDB1 = ttd.findById(3);
+//        TravelTicket ticketFromDB2 = ttd.findById(4);
+////        TravelTicket passFromDB1 = ttd.findById(5);
+////        TravelTicket passFromDB2 = ttd.findById(6);
+//
+//        Reseller resellerFromDB = rld.findById(1);
+//        Reseller resellerFromDB2 = rld.findById(2);
+//
+//        List<TravelTicket> ticketList = new ArrayList<>();
+//        ticketList.add(ticketFromDB1);
+//        ticketList.add(ticketFromDB2);
+//        ticketList.add(passFromDB1);
+//        ticketList.add(passFromDB2);
+//
+//        resellerFromDB.setTravelTicketList(ticketList);
+//
+//        rld.save(resellerFromDB);
 
-        Reseller resellerFromDB = rld.findById(1);
+        //Venditore 2
 
-        List<TravelTicket> ticketList = new ArrayList<>();
-        ticketList.add(ticketFromDB1);
-        ticketList.add(ticketFromDB2);
+//        TravelTicket ticketFromDB1 = ttd.findById(3);
+//        TravelTicket ticketFromDB2 = ttd.findById(4);
+//       TravelTicket passFromDB1 = ttd.findById(5);
+//       TravelTicket passFromDB2 = ttd.findById(6);
+//
+//        Reseller resellerFromDB = rld.findById(1);
+//        Reseller resellerFromDB2 = rld.findById(2);
+//
+//        List<TravelTicket> ticketList = new ArrayList<>();
+//        ticketList.add(ticketFromDB1);
+//        ticketList.add(ticketFromDB2);
+//        ticketList.add(passFromDB1);
+//        ticketList.add(passFromDB2);
+//
+//        resellerFromDB.setTravelTicketList(ticketList);
+//
+//        rld.save(resellerFromDB);
 
-        resellerFromDB.setTravelTicketList(ticketList);
+        long count = rld.countByResellerAndPeriod(1, LocalDate.of(2024, 10, 1), LocalDate.now(), "Ticket");
+        System.out.println("Biglietti emessi dal rivenditore 1: " + count);
 
-        rld.save(resellerFromDB);
-
-        int number = rld.howManyTicketPerPeriod(LocalDate.now().minusDays(30), LocalDate.now().plusDays(20));
-        System.out.println(number);
 
 
         System.out.println("Hello World!");
