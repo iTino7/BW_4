@@ -27,6 +27,8 @@ public class Route {
     )
     private List<Transport> transportsList2;
 
+    @OneToMany(mappedBy = "routes")
+    private List<TransportRoute> transportRouteList;
 
     public Route() {
     }

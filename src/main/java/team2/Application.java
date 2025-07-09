@@ -58,9 +58,15 @@ public class Application {
         RouteDAO rd = new RouteDAO(em);
         Route route1 = new Route("Central Station", "Bridge", 25.10);
         Route route2 = new Route("Middle Town", "Up Town", 48.12);
+        Route route3 = new Route("Central Park", "Lake", 15.30);
+        Route route4 = new Route("Cathedral", "Hospital", 35.50);
 
-//        rd.save(route1);
-//        rd.save(route2);
+        //rd.save(route1);
+        //rd.save(route2);
+        //rd.save(route3);
+        //rd.save(route4);
+        Route route1FromDB = rd.findById(1);
+        Route route2FromDB = rd.findById(2);
 
         ResellerDAO rld = new ResellerDAO(em);
         Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10 );
@@ -80,6 +86,13 @@ public class Application {
 
 //        md.save(maintenance1);
 //        md.save(maintenance2);
+
+        TransportsRoutesDAO trd = new TransportsRoutesDAO(em);
+        TransportRoute transportRoutes1 = new TransportRoute(route1FromDB, busFromDB, 30.10);
+        TransportRoute transportRoutes2 = new TransportRoute(route2FromDB, tramFromDB, 45.10);
+
+        //trd.save(transportRoutes1);
+        //trd.save(transportRoutes2);
 
 
         System.out.println("**************** METODO CERCA N.OF TICKET *******************");
@@ -130,6 +143,18 @@ public class Application {
 
         td.getServicePeriodByID(1);
 
+*/
+        System.out.println("**************** CORSE *******************");
+
+        System.out.println("Numero di volte che un mezzo (Bus ID 1) ha percorso una tratta (Route ID 1)");
+        long bus1Route1Runs = trd.countRunsByTransportAndRoute(busFromDB.getTransport_id(), route1FromDB.getRoute_id());
+        System.out.println("The Bus (ID: " + busFromDB.getTransport_id() + ") has traveled the route '" +
+                route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + "' " + bus1Route1Runs + " times.");
+
+        System.out.println("Numero di volte che un mezzo (Tram ID 2) ha percorso una tratta (Route ID 1)");
+        long tram2Route1Runs = trd.countRunsByTransportAndRoute(tramFromDB.getTransport_id(), route1FromDB.getRoute_id());
+        System.out.println("The Tram (ID: " + tramFromDB.getTransport_id() + ") has traveled the route '" +
+                route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + "' " + tram2Route1Runs + " times.");
 
         System.out.println("Hello World!");
 
