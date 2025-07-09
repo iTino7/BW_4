@@ -80,8 +80,8 @@ public class TransportDAO {
 
         long actualDaysOfService = estimatedDaysOfService - daysUnderMaintenance;
 
-        System.out.println("Transport vehicle with id " + id + " has been under maintenance for " + daysUnderMaintenance + " days. Specifically " + this.getMonths(daysUnderMaintenance) + " months, " + getWeeks(daysUnderMaintenance) + " weeks and " + getDays(daysUnderMaintenance) + " days.");
-        System.out.println("Transport vehicle with id " + id + " has been in service for " + actualDaysOfService + " days. Specifically " + this.getYears(actualDaysOfService) + " years, " + this.getMonths(actualDaysOfService) + " months, " + this.getWeeks(actualDaysOfService) + " weeks and " + this.getDays(actualDaysOfService) + " days.");
+        System.out.println("Il veicolo con id " + id + " è stato in manutenzione per " + daysUnderMaintenance + " giorni. Nello specifico " + this.getMonths(daysUnderMaintenance) + " mesi, " + getWeeks(daysUnderMaintenance) + " settimane e " + getDays(daysUnderMaintenance) + " giorni.");
+        System.out.println("Il veicolo con id " + id + " è stato in servizio per " + actualDaysOfService + " giorni. Nello specifico" + this.getYears(actualDaysOfService) + " anni, " + this.getMonths(actualDaysOfService) + " mesi, " + this.getWeeks(actualDaysOfService) + " settimane e " + this.getDays(actualDaysOfService) + " giorni.");
     }
 
     public void countByTransportAndPeriod(long transportId, LocalDate startDate, LocalDate endDate) {

@@ -2,8 +2,10 @@ package team2.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "transportss_routes")
+@Table(name = "transports_routes")
 public class TransportRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,14 +18,16 @@ public class TransportRoute {
     private Transport transports;
     @Column(name = "actual_time_min")
     private double actualTimeMin;
+    private LocalDateTime travelTime;
 
     public TransportRoute() {
     }
 
-    public TransportRoute(Route routes, Transport transports, double actualTimeMin) {
+    public TransportRoute(Route routes, Transport transports, double actualTimeMin, LocalDateTime travelTime) {
         this.routes = routes;
         this.transports = transports;
         this.actualTimeMin = actualTimeMin;
+        this.travelTime = travelTime;
     }
 
     public long getId() {
@@ -54,6 +58,14 @@ public class TransportRoute {
         this.actualTimeMin = actualTimeMin;
     }
 
+    public LocalDateTime getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(LocalDateTime travelTime) {
+        this.travelTime = travelTime;
+    }
+
     @Override
     public String toString() {
         return "TransportRoute{" +
@@ -61,6 +73,7 @@ public class TransportRoute {
                 ", routes=" + routes +
                 ", transports=" + transports +
                 ", actualTimeMin=" + actualTimeMin +
+                ", travelTime=" + travelTime +
                 '}';
     }
 }

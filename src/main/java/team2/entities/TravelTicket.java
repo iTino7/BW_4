@@ -18,6 +18,7 @@ public abstract class TravelTicket {
     private LocalDate issuedDate;
 
     @ManyToOne
+    @JoinColumn(name = "reseller_id")
     private Reseller reseller;
 
     @OneToMany(mappedBy = "ticket")
@@ -27,20 +28,20 @@ public abstract class TravelTicket {
     }
 
     public TravelTicket(LocalDate issuedDate, Reseller reseller) {
-        this.issuedDate = issuedDate;
         this.reseller = reseller;
+        this.issuedDate = issuedDate;
     }
 
     public long getId() {
         return id;
     }
 
-    public LocalDate getIssuedDate() {
-        return issuedDate;
-    }
-
     public void setIssuedDate(LocalDate issuedDate) {
         this.issuedDate = issuedDate;
+    }
+
+    public LocalDate getIssuedDate() {
+        return issuedDate;
     }
 
     public Reseller getReseller() {

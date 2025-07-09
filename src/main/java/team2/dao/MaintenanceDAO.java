@@ -17,7 +17,7 @@ public class MaintenanceDAO {
         transaction.begin();
         entityManager.persist(newMaintenance);
         transaction.commit();
-        System.out.println("Maintenance with id " + newMaintenance.getId() + " successfully added!");
+        System.out.println("Manutenzione con id " + newMaintenance.getId() + " creata con successo!");
     }
 
     public Maintenance findMaintenanceById(long MaintenanceId) {
@@ -37,7 +37,7 @@ public class MaintenanceDAO {
 
         transaction.commit();
 
-        System.out.println("Maintenance with id " + found.getId() + " successfully removed!");
+        System.out.println("Manutenzione con id " + found.getId() + " rimossa con successo!");
 
     }
 }

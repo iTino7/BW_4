@@ -10,7 +10,8 @@ import java.time.LocalDate;
 public class Ticket extends TravelTicket {
     private boolean isActive;
 
-    public Ticket () {}
+    public Ticket() {
+    }
 
     public Ticket(LocalDate issuedDate, Reseller reseller) {
         super(issuedDate, reseller);

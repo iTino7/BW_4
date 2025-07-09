@@ -19,7 +19,7 @@ public class UserDAO {
         transaction.begin();
         entityManager.persist(newUser);
         transaction.commit();
-        System.out.println("New user with id " + newUser.getId() + " added successfully!");
+        System.out.println("Utente con id " + newUser.getId() + " aggiunto con successo!");
     }
 
     public User findUserByID(long id) {
@@ -35,7 +35,7 @@ public class UserDAO {
         transaction.begin();
         entityManager.remove(found);
         transaction.commit();
-        System.out.println("User with id " + found.getId() + " successfully removed!");
+        System.out.println("Utente con id" + found.getId() + " rimosso con successo!");
     }
 
     public void checkCardValidity(long id) {
@@ -45,9 +45,9 @@ public class UserDAO {
         LocalDate dateEx = found.getCard().getExpiringDate();
 
         if (dateEx.isBefore(LocalDate.now())) {
-            System.out.println("Your card has expired");
+            System.out.println("La tua carta è scaduta.");
         } else {
-            System.out.println("Your card is valid");
+            System.out.println("La tua carta è ancora valida.");
         }
     }
 }

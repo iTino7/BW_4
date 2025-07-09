@@ -10,10 +10,11 @@ import java.time.LocalDate;
 public class Pass extends TravelTicket {
     @Enumerated(EnumType.STRING)
     private PassType passType;
-    @Column (name = "expiring_date")
+    @Column(name = "expiring_date")
     private LocalDate expiringDate;
 
-    public Pass() {}
+    public Pass() {
+    }
 
     public Pass(PassType passType, LocalDate expiringDate, LocalDate issuedDate, Reseller reseller) {
         super(issuedDate, reseller);
