@@ -17,7 +17,7 @@ public class CardDAO {
         transaction.begin();
         entityManager.persist(newCard);
         transaction.commit();
-        System.out.println("New card with id " + newCard.getId() + " added successfully!");
+        System.out.println("Nuova carta con id " + newCard.getId() + " creata con successo!");
     }
 
     public Card findCardByID(long id) {
@@ -33,6 +33,6 @@ public class CardDAO {
         transaction.begin();
         entityManager.remove(found);
         transaction.commit();
-        System.out.println("Card with id " + found.getId() + " successfully removed!");
+        System.out.println("Nuova carta con id" + found.getId() + " rimossa con successo!");
     }
 }

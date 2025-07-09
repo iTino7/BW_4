@@ -7,7 +7,6 @@ import team2.entities.Reseller;
 import team2.exceptions.NotFoundException;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ResellerDAO {
     private final EntityManager entityManager;
@@ -21,7 +20,7 @@ public class ResellerDAO {
         transaction.begin();
         entityManager.persist(newReseller);
         transaction.commit();
-        System.out.println("Reseller " + newReseller.toString() + " creato correttamente!");
+        System.out.println("Venditore " + newReseller.toString() + " creato correttamente!");
     }
 
     public Reseller findById(long resellerId) {
@@ -41,7 +40,7 @@ public class ResellerDAO {
 
         transaction.commit();
 
-        System.out.println("Reseller " + found.getResellerId() + " rimosso correttamente!");
+        System.out.println("Venditore " + found.getResellerId() + " rimosso correttamente!");
 
     }
 
@@ -61,7 +60,7 @@ public class ResellerDAO {
 
         TypedQuery<Long> query = entityManager.createQuery(
                 "SELECT COUNT(t) FROM Reseller r JOIN r.travelTicketList t " +
-                        "WHERE r.resellerId = :resellerId AND t.issuedDate BETWEEN :startDate AND :endDate " + ticketTypeQuery ,
+                        "WHERE r.resellerId = :resellerId AND t.issuedDate BETWEEN :startDate AND :endDate " + ticketTypeQuery,
                 Long.class
         );
         query.setParameter("resellerId", resellerId);
