@@ -5,6 +5,9 @@ import jakarta.persistence.EntityTransaction;
 import team2.entities.Transport;
 import team2.exceptions.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class TransportDAO {
 
     private final EntityManager em;
@@ -27,16 +30,23 @@ public class TransportDAO {
     }
 
     public void findByIdAndDelete(long id) {
-        try {
-            Transport found = this.findById(id);
-            EntityTransaction t = em.getTransaction();
-            t.begin();
-            em.remove(found);
-            t.commit();
-            System.out.println("id delete");
+        Transport found = this.findById(id);
+        EntityTransaction t = em.getTransaction();
+        t.begin();
+        em.remove(found);
+        t.commit();
+        System.out.println("id delete");
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
+
+    public void getServicePeriodByID(long id) {
+        Transport found = this.findById(id);
+
+        LocalDate firstDay = found.getFirstServiceDay();
+        long estimatedDaysOfService = ChronoUnit.DAYS.between(firstDay, LocalDate.now());
+        System.out.println("This transport vehicle has been in service for " + estimatedDaysOfService + " days");
+
+        //found.getMaintenanceList().forEach(maintenance -> );
+    }
+
 }

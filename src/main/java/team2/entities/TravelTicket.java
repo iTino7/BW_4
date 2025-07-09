@@ -3,22 +3,21 @@ package team2.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "travel_tickets")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type_of_tickets")
 public abstract class TravelTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
-    @Column (name = "issued_date")
+    @Column(name = "issued_date")
     private LocalDate issuedDate;
 
-    @ManyToMany(mappedBy = "travelTicketList")
-    private List<Reseller> resellerList;
+    @ManyToOne
+    private Reseller reseller;
 
     public TravelTicket() {
     }
