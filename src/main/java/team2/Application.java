@@ -153,24 +153,24 @@ public class Application {
 
         System.out.println("Numero di volte che un mezzo (Bus ID 1) ha percorso una tratta (Route ID 1)");
         long bus1Route1Runs = trd.countRunsByTransportAndRoute(busFromDB.getTransport_id(), route1FromDB.getRoute_id());
-        System.out.println("The Bus (ID: " + busFromDB.getTransport_id() + ") has traveled the route " +
+        System.out.println("Il Bus (ID: " + busFromDB.getTransport_id() + ") ha percorso la tratta " +
                 route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + " " + bus1Route1Runs + " times.");
 
         System.out.println("Numero di volte che un mezzo (Tram ID 2) ha percorso una tratta (Route ID 1)");
         long tram2Route1Runs = trd.countRunsByTransportAndRoute(tramFromDB.getTransport_id(), route1FromDB.getRoute_id());
-        System.out.println("The Tram (ID: " + tramFromDB.getTransport_id() + ") has traveled the route " +
+        System.out.println("Il Tram (ID: " + tramFromDB.getTransport_id() + ") ha percorso la tratta " +
                 route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + "' " + tram2Route1Runs + " times.");
 
         System.out.println("Tempo medio percorrenza rotta");
         Double avgBus1Route1Time = trd.currentAverageTime(busFromDB.getTransport_id(), route1FromDB.getRoute_id());
         if (avgBus1Route1Time != null) {
             double roundedAvgTime = Math.round(avgBus1Route1Time * 100.0) / 100.0;
-            System.out.println("Average travel time for the Bus (ID: " + busFromDB.getTransport_id() +
-                    ") on the route " + route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() +
-                    "': " + roundedAvgTime + " minutes.");
+            System.out.println("Tempo medio di percorrenza per il Bus (ID: " + busFromDB.getTransport_id() +
+                    ") sulla tratta " + route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() +
+                    ": " + roundedAvgTime + " minutes.");
         } else {
-            System.out.println("No route found for the Bus (ID: " + busFromDB.getTransport_id() +
-                    ") on the route " + route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + " .");
+            System.out.println("Tempo medio di percorrenza per il Bus (ID: " + busFromDB.getTransport_id() +
+                    ") sulla tratta " + route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + " .");
         }
 
         System.out.println("Hello World!");
