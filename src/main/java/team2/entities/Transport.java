@@ -32,6 +32,9 @@ public abstract class Transport {
     @ManyToMany(mappedBy = "transportsList2")
     private List<Route> routeList;
 
+    @OneToMany(mappedBy = "transports")
+    private List<TransportRoute> transportRouteList;
+
 
     public Transport() {
     }

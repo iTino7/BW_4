@@ -31,10 +31,6 @@ public abstract class TravelTicket {
     }
 
 
-    public List<Reseller> getResellerList() {
-        return resellerList;
-    }
-
     public LocalDate getIssuedDate() {
         return issuedDate;
     }
