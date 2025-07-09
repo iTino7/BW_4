@@ -10,8 +10,6 @@ import team2.entities.enums.ResellerStatusType;
 import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Application {
 
@@ -69,10 +67,10 @@ public class Application {
         Route route2FromDB = rd.findById(2);
 
         ResellerDAO rld = new ResellerDAO(em);
-        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10 );
-        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20 );
-        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30 );
-        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40 );
+        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10);
+        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20);
+        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30);
+        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40);
 
 //        rld.save(tabacchi1);
 //        rld.save(tabacchi2);
@@ -143,7 +141,7 @@ public class Application {
 
         td.getServicePeriodByID(1);
 
-*/
+
         System.out.println("**************** CORSE *******************");
 
         System.out.println("Numero di volte che un mezzo (Bus ID 1) ha percorso una tratta (Route ID 1)");
