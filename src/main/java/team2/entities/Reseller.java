@@ -26,7 +26,7 @@ public abstract class Reseller {
     protected ResellerStatusType status;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "reseller")
     private List<TravelTicket> travelTicketList;
 
 
