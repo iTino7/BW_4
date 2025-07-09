@@ -29,9 +29,6 @@ public abstract class Transport {
     @OneToMany(mappedBy = "vehicles")
     private List<Maintenance> maintenanceList;
 
-    @ManyToMany(mappedBy = "transportsList2")
-    private List<Route> routeList;
-
     @OneToMany(mappedBy = "transports")
     private List<TransportRoute> transportRouteList;
 
