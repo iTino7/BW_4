@@ -30,14 +30,22 @@ public abstract class TravelTicket {
         return id;
     }
 
-
-    public List<Reseller> getResellerList() {
-        return resellerList;
+    public void setIssuedDate(LocalDate issuedDate) {
+        this.issuedDate = issuedDate;
     }
 
     public LocalDate getIssuedDate() {
         return issuedDate;
     }
+
+    public Reseller getReseller() {
+        return reseller;
+    }
+
+    public void setReseller(Reseller reseller) {
+        this.reseller = reseller;
+    }
+
 
     @Override
     public String toString() {

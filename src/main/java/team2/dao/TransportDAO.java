@@ -2,11 +2,13 @@ package team2.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import team2.entities.Maintenance;
 import team2.entities.Transport;
 import team2.exceptions.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class TransportDAO {
 
@@ -39,14 +41,45 @@ public class TransportDAO {
 
     }
 
+    public long getYears(long days) {
+        return days / 365;
+    }
+
+    public long getMonths(long days) {
+        return (days % 365) / 30;
+    }
+
+    public long getWeeks(long days) {
+        return ((days % 365) % 30) / 7;
+    }
+
+    public long getDays(long days) {
+        return ((days % 365) % 30) % 7;
+    }
+
     public void getServicePeriodByID(long id) {
         Transport found = this.findById(id);
 
         LocalDate firstDay = found.getFirstServiceDay();
         long estimatedDaysOfService = ChronoUnit.DAYS.between(firstDay, LocalDate.now());
-        System.out.println("This transport vehicle has been in service for " + estimatedDaysOfService + " days");
 
-        //found.getMaintenanceList().forEach(maintenance -> );
+        List<Maintenance> maintenances = found.getMaintenanceList();
+        long daysUnderMaintenance = 0;
+        for (Maintenance maintenance : maintenances) {
+            if (maintenance.getFinalDate() == null) {
+                maintenance.setFinalDate(LocalDate.now());
+            }
+            daysUnderMaintenance += ChronoUnit.DAYS.between(maintenance.getStartingDate(), maintenance.getFinalDate());
+        }
+        long years = daysUnderMaintenance / 365;
+        long months = (daysUnderMaintenance % 365) / 30;
+        long weeks = ((daysUnderMaintenance % 365) % 30) / 7;
+        long days = ((daysUnderMaintenance % 365) % 30) % 7;
+
+        long actualDaysOfService = estimatedDaysOfService - daysUnderMaintenance;
+
+        System.out.println("Transport vehicle with id " + id + " has been under maintenance for " + daysUnderMaintenance + " days. Specifically " + this.getMonths(daysUnderMaintenance) + " months, " + getWeeks(daysUnderMaintenance) + " weeks and " + getDays(daysUnderMaintenance) + " days.");
+        System.out.println("Transport vehicle with id " + id + " has been in service for " + actualDaysOfService + " days. Specifically " + this.getYears(actualDaysOfService) + " years, " + this.getMonths(actualDaysOfService) + " months, " + this.getWeeks(actualDaysOfService) + " weeks and " + this.getDays(actualDaysOfService) + " days.");
     }
 
 }

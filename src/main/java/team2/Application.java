@@ -10,8 +10,6 @@ import team2.entities.enums.ResellerStatusType;
 import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Application {
 
@@ -39,10 +37,10 @@ public class Application {
         TransportDAO td = new TransportDAO(em);
         Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
         Transport tram = new Tram(60, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1993, 10, 30), 276);
-        Transport busFromDB = td.findById(1);
-        Transport tramFromDB = td.findById(2);
 //        td.save(bus);
 //        td.save(tram);
+        Transport busFromDB = td.findById(1);
+        Transport tramFromDB = td.findById(2);
 
         TravelTicketDAO ttd = new TravelTicketDAO(em);
         TravelTicket ticket1 = new Ticket(LocalDate.now());
@@ -63,10 +61,10 @@ public class Application {
 //        rd.save(route2);
 
         ResellerDAO rld = new ResellerDAO(em);
-        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10 );
-        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20 );
-        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30 );
-        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40 );
+        Reseller tabacchi1 = new AuthorizedReseller(ResellerStatusType.CLOSED, 5, 10);
+        Reseller tabacchi2 = new AuthorizedReseller(ResellerStatusType.OPEN, 15, 20);
+        Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30);
+        Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40);
 
 //        rld.save(tabacchi1);
 //        rld.save(tabacchi2);
@@ -84,22 +82,25 @@ public class Application {
 
         System.out.println("**************** METODO CERCA N.OF TICKET *******************");
 
-        TravelTicket ticketFromDB1 = ttd.findById(3);
-        TravelTicket ticketFromDB2 = ttd.findById(4);
+//        TravelTicket ticketFromDB1 = ttd.findById(1);
+//        TravelTicket ticketFromDB2 = ttd.findById(2);
+//
+//        Reseller resellerFromDB = rld.findById(1);
+//
+//        List<TravelTicket> ticketList = new ArrayList<>();
+//        ticketList.add(ticketFromDB1);
+//        ticketList.add(ticketFromDB2);
+//
+//        resellerFromDB.setTravelTicketList(ticketList);
+//
+//        rld.save(resellerFromDB);
+//
+//        int number = rld.howManyTicketPerPeriod(LocalDate.now().minusDays(30), LocalDate.now().plusDays(20));
+//        System.out.println(number);
 
-        Reseller resellerFromDB = rld.findById(1);
+        System.out.println("************ MAINTENANCES PER VEHICLE ************");
 
-        List<TravelTicket> ticketList = new ArrayList<>();
-        ticketList.add(ticketFromDB1);
-        ticketList.add(ticketFromDB2);
-
-        resellerFromDB.setTravelTicketList(ticketList);
-
-        rld.save(resellerFromDB);
-
-        int number = rld.howManyTicketPerPeriod(LocalDate.now().minusDays(30), LocalDate.now().plusDays(20));
-        System.out.println(number);
-
+        td.getServicePeriodByID(1);
 
         System.out.println("Hello World!");
 
