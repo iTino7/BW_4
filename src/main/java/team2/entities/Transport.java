@@ -88,14 +88,6 @@ public abstract class Transport {
         this.maintenanceList = maintenanceList;
     }
 
-    public List<Route> getRouteList() {
-        return routeList;
-    }
-
-    public void setRouteList(List<Route> routeList) {
-        this.routeList = routeList;
-    }
-
     @Override
     public String toString() {
         return "Transport{" +
