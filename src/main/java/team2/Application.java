@@ -39,6 +39,8 @@ public class Application {
 
         //cd.saveCard(card1);
         //cd.saveCard(card2);
+        Card foundCard1 = cd.findCardByID(1);
+        Card foundCard2 = cd.findCardByID(2);
 
         TransportDAO td = new TransportDAO(em);
         Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
@@ -64,8 +66,8 @@ public class Application {
         TravelTicketDAO ttd = new TravelTicketDAO(em);
         TravelTicket ticket1 = new Ticket(LocalDate.now());
         TravelTicket ticket2 = new Ticket(null);
-        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
-        TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
+        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB, foundCard1);
+        TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB, foundCard2);
 
 //        ttd.save(ticket1);
 //        ttd.save(ticket2);
@@ -306,9 +308,58 @@ public class Application {
                             }
                         }
                     } else {
-                        System.out.println("ciao");
-                        isActive = false;
-                        break;
+                        boolean done = true;
+                        while (done) {
+                            System.out.print("Hai una tessera? (si/no): ");
+                            String risposta = scan.nextLine().toLowerCase();
+
+                            switch (risposta) {
+                                case "sì":
+                                case "si":
+                                    System.out.println("Inserisci il numero della tua tessera");
+                                    int cardId = Integer.parseInt(scan.nextLine());
+                                    Card cardFromDB = cd.findCardByID(cardId);
+                                    System.out.println("Verifica validità in corso...");
+                                    long userId = cardFromDB.getOwner().getId();
+                                    String check = ud.checkCardValidity(userId);
+
+                                    if (check.equals("Scaduta")) {
+                                        System.out.println("Vuoi rinnovarla? ");
+                                        String response = scan.nextLine().toLowerCase();
+                                        if (response.equals("no")) {
+                                            System.out.println("Arrivederci !");
+                                            done = false;
+                                            isRunning = false;
+                                            isActive = false;
+                                            break;
+                                        } else if (response.equals("si")) {
+                                            continue;
+                                        } else {
+                                            throw new InvalidInputException();
+                                        }
+                                    } else if (check.equals("noPass")) {
+                                        System.out.println("Vuoi un abbonamento mensile o settimanale? ");
+                                        String response = scan.nextLine().toLowerCase();
+                                        if (response.equals("settimanale")) {
+                                            System.out.println("Abbonamento settimanale attivato ! ");
+                                        } else if (response.equals("mensile")) {
+                                            System.out.println("Abbonamento mensile attivato ! ");
+                                        } else {
+                                            throw new InvalidInputException();
+                                        }
+                                    }
+
+
+                                    break;
+                                case "no":
+                                    System.out.println("Hai risposto no.");
+                                    break;
+                                default:
+                                    System.out.println("Risposta non valida. Scrivi 'sì' o 'no'.");
+                                    break;
+                            }
+
+                        }
                     }
                 } catch (InvalidInputException | RecordNotFoundException e) {
                     System.out.println(e.getMessage());

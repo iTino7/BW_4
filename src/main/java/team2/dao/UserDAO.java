@@ -2,10 +2,14 @@ package team2.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import team2.entities.Card;
+import team2.entities.Pass;
 import team2.entities.User;
 import team2.exceptions.NotFoundException;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDAO {
     private final EntityManager entityManager;
@@ -38,16 +42,29 @@ public class UserDAO {
         System.out.println("Utente con id" + found.getId() + " rimosso con successo!");
     }
 
-    public void checkCardValidity(long id) {
+    public String checkCardValidity(long id) {
+        String result = "";
+
         User found = this.findUserByID(id);
         if (found == null) throw new NotFoundException(id);
 
-        LocalDate dateEx = found.getCard().getExpiringDate();
+        Card card = found.getCard();
+        List<Pass> userPass = card.getPassList().stream().filter(pass -> pass.getExpiringDate().isAfter(LocalDate.now())).toList();
+
+        LocalDate dateEx = card.getExpiringDate();
 
         if (dateEx.isBefore(LocalDate.now())) {
             System.out.println("La tua carta è scaduta.");
+            result = "Scaduta";
+            return result;
+        } else if (userPass.isEmpty()) {
+            System.out.println("La tua carta è ancora valida, ma non hai un abbonamento attivo.");
+            result = "noPass";
+            return result;
         } else {
-            System.out.println("La tua carta è ancora valida.");
+            System.out.println("La tua carta è ancora valida! Hai un abbonamento " +userPass.getFirst().getPassType() + " attivo " );
+            result = "yesPass";
+            return result;
         }
     }
 }

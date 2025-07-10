@@ -66,6 +66,14 @@ public class Card {
         this.passList = passList;
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Override
     public String toString() {
         return "Card{" +

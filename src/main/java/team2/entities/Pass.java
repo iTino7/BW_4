@@ -20,10 +20,11 @@ public class Pass extends TravelTicket {
     public Pass() {
     }
 
-    public Pass(PassType passType, LocalDate expiringDate, LocalDate issuedDate, Reseller reseller) {
+    public Pass(PassType passType, LocalDate expiringDate, LocalDate issuedDate, Reseller reseller, Card card) {
         super(issuedDate, reseller);
         this.passType = passType;
         this.expiringDate = expiringDate;
+        this.card = card;
     }
 
     public PassType getPassType() {
