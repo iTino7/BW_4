@@ -63,7 +63,7 @@ public class TransportsRoutesDAO {
         Double avgTime = currentAverageTime(transportId, routeId);
 
         if (avgTime != null) {
-            double roundedAvgTime = Math.round(avgTime * 100.0) / 100.0;
+            int roundedAvgTime = (int) (Math.round(avgTime * 100.0) / 100.0);
             System.out.println("Tempo medio di percorrenza per il " + transports.getClass().getSimpleName() + " (ID: " + transportId +
                     ") sulla tratta " + routes.getDeparturePoint() + " - " +
                     routes.getTerminusRoute() + " : " + roundedAvgTime + " minuti.");

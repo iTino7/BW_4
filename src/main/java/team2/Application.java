@@ -8,6 +8,7 @@ import team2.entities.*;
 import team2.entities.enums.PassType;
 import team2.entities.enums.ResellerStatusType;
 import team2.entities.enums.TransportStatus;
+import team2.exceptions.InvalidInputException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -137,78 +138,108 @@ public class Application {
         System.out.println("Salve, sei un cliente o un amministratore ?");
         String userType = scan.nextLine().toLowerCase();
 
-        if (userType.equals("amministratore")) {
-            System.out.println("Inserisci la password: ");
-            scan.nextLine();
-            System.out.println("Benvenuto amministratore, seleziona un argomento: ");
-            while (true) {
-                System.out.println("-- MENU' PRINCIPALE --");
-                System.out.println("1 - Biglietti e Abbonamenti.\n2 - Mezzi di trasporto.\n3 - Tratte.\n0 - Chiudi programma.");
-                int userChoice = Integer.parseInt(scan.nextLine());
-                if (userChoice == 1) {
-                    System.out.println("-- MENU' BIGLIETTI E ABBONAMENTI");
-                    System.out.println("1 - Titoli di viaggio venduti in un periodo temporale.\n2 - Titoli di viaggio venduti da uno specifico rivenditore.\n0 - Torna al menù precedente.");
-                    int ticketMethod = Integer.parseInt(scan.nextLine());
-                    switch (ticketMethod) {
-                        case 0:
+        try {
+            if (userType.equals("amministratore")) {
+                System.out.println("Inserisci la password: ");
+                scan.nextLine();
+                System.out.println("Benvenuto amministratore, seleziona un argomento: ");
+                while (true) {
+                    System.out.println("-- MENU' PRINCIPALE --");
+                    System.out.println("1 - Biglietti e Abbonamenti.\n2 - Mezzi di trasporto.\n3 - Tratte.\n0 - Chiudi programma.");
+                    int userChoice = Integer.parseInt(scan.nextLine());
+                    if (userChoice == 1) {
+                        System.out.println("-- MENU' BIGLIETTI E ABBONAMENTI");
+                        System.out.println("1 - Titoli di viaggio venduti in un periodo temporale.\n2 - Titoli di viaggio venduti da uno specifico rivenditore.\n0 - Torna al menù precedente.");
+                        int ticketMethod = Integer.parseInt(scan.nextLine());
+                        switch (ticketMethod) {
+                            case 0:
+                                break;
+                            case 1: {
+                                System.out.println("Inserisci la prima data: ");
+                                LocalDate startDate = LocalDate.parse(scan.nextLine());
+                                System.out.println("Inserisci la seconda data: ");
+                                LocalDate endDate = LocalDate.parse(scan.nextLine());
+                                ttd.countTravelTicketByPeriod(startDate, endDate);
+                            }
                             break;
-                        case 1: {
-                            System.out.println("Inserisci la prima data: ");
-                            LocalDate startDate = LocalDate.parse(scan.nextLine());
-                            System.out.println("Inserisci la seconda data: ");
-                            LocalDate endDate = LocalDate.parse(scan.nextLine());
-                            ttd.countTravelTicketByPeriod(startDate, endDate);
+                            case 2: {
+                                System.out.println("Inserisci l'id del rivenditore: ");
+                                int resellerId = Integer.parseInt(scan.nextLine());
+                                rld.countTicketAndPassesByReseller(resellerId);
+                            }
+                            break;
+                            default:
+                                System.out.println("Devi inserire un numero valido.");
                         }
-                        break;
-                        case 2: {
-                            System.out.println("Inserisci l'id del rivenditore: ");
-                            int resellerId = Integer.parseInt(scan.nextLine());
-                            rld.countTicketAndPassesByReseller(resellerId);
+                    } else if (userChoice == 2) {
+                        System.out.println("-- MENU' MEZZI DI TRASPORTO");
+                        System.out.println("1 - Biglietti vidimati in totale in un periodo temporale.\n2 - Biglietti vidimati su uno specifico mezzo di trasporto.\n3 - Periodo di servizio e di manutenzione di un mezzo di trasporto.\n0 - Torna al menù precedente.");
+                        int method = Integer.parseInt(scan.nextLine());
+                        switch (method) {
+                            case 0:
+                                break;
+                            case 1: {
+                                System.out.println("Inserisci la prima data: ");
+                                LocalDate startDate = LocalDate.parse(scan.nextLine());
+                                System.out.println("Inserisci la seconda data: ");
+                                LocalDate endDate = LocalDate.parse(scan.nextLine());
+                                /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
+                            }
+                            break;
+                            case 2: {
+                                System.out.println("Inserisci l'id del mezzo di trasporto: ");
+                                int transportId = Integer.parseInt(scan.nextLine());
+                                /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
+                            }
+                            break;
+                            case 3: {
+                                System.out.println("Inserisci l'id del mezzo di trasporto: ");
+                                int transportId = Integer.parseInt(scan.nextLine());
+                                td.getServicePeriodByID(transportId);
+                            }
+                            break;
+                            default: {
+                                System.out.println("Devi inserire un numero valido.");
+                            }
                         }
+                    } else if (userChoice == 3) {
+                        System.out.println("-- MENU' TRATTE --");
+                        System.out.println("1 - Tempo medio di percorrenza di una tratta.\n2 - Numero di volte in cui un mezzo ha percorso una tratta.");
+                        int method = Integer.parseInt(scan.nextLine());
+                        switch (method) {
+                            case 0:
+                                break;
+                            case 1: {
+                                System.out.println("Inserisci l'id del mezzo di trasporto di cui vuoi la media: ");
+                                int transportId = Integer.parseInt(scan.nextLine());
+                                Transport transportFromDB = td.findById(transportId);
+                                System.out.println("Inserisci l'id della tratta di cui vuoi la media: ");
+                                int routeId = Integer.parseInt(scan.nextLine());
+                                Route routeFromDB = rd.findById(routeId);
+                                trd.averageRunTime(transportFromDB, routeFromDB);
+                            }
+                            break;
+                            case 2: {
+                                System.out.println("Inserisci l'id del mezzo di trasporto: ");
+                                int transportId = Integer.parseInt(scan.nextLine());
+                                Transport transportFromDB = td.findById(transportId);
+                                System.out.println("Inserisci l'id della tratta: ");
+                                int routeId = Integer.parseInt(scan.nextLine());
+                                Route routeFromDB = rd.findById(routeId);
+                                trd.countNumberOfRuns(transportFromDB, routeFromDB);
+                            }
+                        }
+                    } else if (userChoice == 0) {
                         break;
-                        default:
-                            System.out.println("Devi inserire un numero valido.");
                     }
-                } else if (userChoice == 2) {
-                    System.out.println("-- MENU' MEZZI DI TRASPORTO");
-                    System.out.println("1 - Biglietti vidimati in totale in un periodo temporale.\n2 - Biglietti vidimati su uno specifico mezzo di trasporto.\n3 - Periodo di servizio e di manutenzione di un mezzo di trasporto.");
-                    int method = Integer.parseInt(scan.nextLine());
-                    switch (method) {
-                        case 1: {
-                            System.out.println("Inserisci la prima data: ");
-                            LocalDate startDate = LocalDate.parse(scan.nextLine());
-                            System.out.println("Inserisci la seconda data: ");
-                            LocalDate endDate = LocalDate.parse(scan.nextLine());
-                            /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
-                        }
-                        break;
-                        case 2: {
-                            System.out.println("Inserisci l'id del mezzo di trasporto: ");
-                            int transportId = Integer.parseInt(scan.nextLine());
-                            /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
-                        }
-                        break;
-                        case 3: {
-                            System.out.println("Inserisci l'id del mezzo di trasporto: ");
-                            int transportId = Integer.parseInt(scan.nextLine());
-                            td.getServicePeriodByID(transportId);
-                        }
-                        break;
-                        default: {
-                            System.out.println("Devi inserire un numero valido.");
-                        }
-                    }
-
-                } else if (userChoice == 3) {
-                    System.out.println("-- MENU' TRATTE --");
-                    System.out.println("Ciao");
-                    /* METODI PER LE TRATTE */
-
-                } else if (userChoice == 0) {
-                    break;
                 }
-            }
+            } else if (userType.equals("cliente")) {
+                System.out.println("ciao");
+            } else throw new InvalidInputException();
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
         }
+
 
         em.close();
         emf.close();
