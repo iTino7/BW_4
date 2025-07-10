@@ -146,39 +146,32 @@ public class Application {
             em.getTransaction().begin();
 
             // Recupera il mezzo di trasporto
-            Transport transport1 = em.find(Transport.class, 5);
+            Transport transport1 = em.find(Transport.class, 4);
             if (transport1 == null) {
                 System.out.println("Transport non trovato. Creane uno o usa un ID esistente.");
                 return;
             }
 
-            Ticket ticket = new Ticket();
-            LocalDate today = LocalDate.now();
-            ticket.validate(transport1, today.minusDays(2));
+//            Ticket ticket = new Ticket();
+//            LocalDate today = LocalDate.now();
+//            ticket.validate(transport1, today.minusDays(2));
 
             //Salvo il biglietto
-            em.persist(ticket);
+//            em.persist(ticket);
 
             // Crea e salva il collegamento con TransportTravelTicket
-            TransportTravelTicket ttt = new TransportTravelTicket(transport1, ticket, today);
-            em.persist(ttt);
-
-            em.getTransaction().commit();
+//            TransportTravelTicket ttt = new TransportTravelTicket(transport1, ticket, today);
+//            em.persist(ttt);
+//
+//            em.getTransaction().commit();
 
             // Imposto il periodo da considerare
             LocalDate startDate = LocalDate.of(2025, 1, 1);
             LocalDate endDate = LocalDate.now();
 
             // Stampo statistiche
-            long countTotal = ttd.countValidatedTicketsByPeriod(startDate, endDate);
-            System.out.println("Biglietti convalidati totali: " + countTotal);
-
-            long countByTransport = ttd.countValidatedTicketsByTransportAndPeriod(transport1, startDate, endDate);
-            System.out.println("Biglietti convalidati sul mezzo " + transport1.getTransport_id() + ": " + countByTransport);
-
-            System.out.println("Biglietti:");
-            List<Ticket> tickets = em.createQuery("SELECT t FROM Ticket t", Ticket.class).getResultList();
-            tickets.forEach(System.out::println);
+            ttd.printValidatedTicketsByPeriod(startDate, endDate);
+            ttd.printValidatedTicketsByTransport(transport1);
 
         } finally {
             em.close();

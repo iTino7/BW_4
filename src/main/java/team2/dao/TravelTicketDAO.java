@@ -57,28 +57,29 @@ public class TravelTicketDAO {
         System.out.println("Nel periodo di tempo inserito sono stati emessi " + count + " titoli di viaggio.");
     }
 
-    //Conto di biglietti convalidati per periodo
-    public long countValidatedTicketsByPeriod(LocalDate startDate, LocalDate endDate) {
+    // Stampa dei biglietti convalidati per periodo
+    public void printValidatedTicketsByPeriod(LocalDate startDate, LocalDate endDate) {
         TypedQuery<Long> query = entityManager.createQuery(
                 "SELECT COUNT(t) FROM Ticket t WHERE t.validationDate IS NOT NULL AND t.validationDate BETWEEN :startDate AND :endDate",
                 Long.class
         );
         query.setParameter("startDate", startDate);
         query.setParameter("endDate", endDate);
-        return query.getSingleResult();
+        long count = query.getSingleResult();
+        System.out.println("Biglietti convalidati totali dal " + startDate + " al " + endDate + ": " + count);
     }
 
-    //conto di biglietti convalidati per mezzo di trasporto e periodo
-    public long countValidatedTicketsByTransportAndPeriod(Transport transport, LocalDate startDate, LocalDate endDate) {
+    // Stampa dei biglietti convalidati per mezzo
+    public void printValidatedTicketsByTransport(Transport transport) {
         TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(t) FROM Ticket t WHERE t.transport = :transport AND t.validationDate BETWEEN :startDate AND :endDate",
+                "SELECT COUNT(t) FROM Ticket t WHERE t.transport = :transport",
                 Long.class
         );
         query.setParameter("transport", transport);
-        query.setParameter("startDate", startDate);
-        query.setParameter("endDate", endDate);
-        return query.getSingleResult();
+        long count = query.getSingleResult();
+        System.out.println("Biglietti convalidati sul mezzo di trasporto con ID " + transport.getTransport_id() + " sono " + count);
     }
+
 
 
 
