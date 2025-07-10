@@ -6,7 +6,7 @@ import jakarta.persistence.TypedQuery;
 import team2.entities.Maintenance;
 import team2.entities.Ticket;
 import team2.entities.Transport;
-import team2.exceptions.NotFoundException;
+import team2.exceptions.RecordNotFoundException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -29,7 +29,7 @@ public class TransportDAO {
 
     public Transport findById(long id) {
         Transport found = em.find(Transport.class, id);
-        if (found == null) throw new NotFoundException(id);
+        if (found == null) throw new RecordNotFoundException("Mezzo di trasporto", id);
         return found;
     }
 

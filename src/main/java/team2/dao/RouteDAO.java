@@ -3,7 +3,7 @@ package team2.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import team2.entities.Route;
-import team2.exceptions.NotFoundException;
+import team2.exceptions.RecordNotFoundException;
 
 public class RouteDAO {
     private final EntityManager entityManager;
@@ -22,7 +22,7 @@ public class RouteDAO {
 
     public Route findById(long routeId) {
         Route found = entityManager.find(Route.class, routeId);
-        if (found == null) throw new NotFoundException(routeId);
+        if (found == null) throw new RecordNotFoundException("Tratta", routeId);
         return found;
     }
 
