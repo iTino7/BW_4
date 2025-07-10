@@ -13,6 +13,7 @@ import team2.exceptions.InvalidInputException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.List;
 
 public class Application {
 
@@ -32,8 +33,8 @@ public class Application {
         User user2FromDB = ud.findUserByID(2);
 
         CardDAO cd = new CardDAO(em);
-        Card card1 = new Card(LocalDate.of(2024, 06, 25), user1FromDB);
-        Card card2 = new Card(LocalDate.of(2025, 05, 18), user2FromDB);
+        Card card1 = new Card(LocalDate.of(2024, 6, 25), user1FromDB);
+        Card card2 = new Card(LocalDate.of(2025, 5, 18), user2FromDB);
 
         //cd.saveCard(card1);
         //cd.saveCard(card2);
@@ -60,8 +61,8 @@ public class Application {
         Reseller resellerFromDB = rld.findById(1);
 
         TravelTicketDAO ttd = new TravelTicketDAO(em);
-        TravelTicket ticket1 = new Ticket(LocalDate.now(), resellerFromDB);
-        TravelTicket ticket2 = new Ticket(LocalDate.now(), resellerFromDB);
+        TravelTicket ticket1 = new Ticket(LocalDate.now());
+        TravelTicket ticket2 = new Ticket(null);
         TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
         TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
 
@@ -134,10 +135,10 @@ public class Application {
         trd.averageRunTime(busFromDB, route2FromDB);
 
 
+
         System.out.println("*************** INIZIO PROGRAMMA CON SCANNER *************");
         System.out.println("Salve, sei un cliente o un amministratore ?");
         String userType = scan.nextLine().toLowerCase();
-
         try {
             if (userType.equals("amministratore")) {
                 System.out.println("Inserisci la password: ");
@@ -240,6 +241,7 @@ public class Application {
             System.out.println(e.getMessage());
         }
 
+        System.out.println("Hello World!");
 
         em.close();
         emf.close();

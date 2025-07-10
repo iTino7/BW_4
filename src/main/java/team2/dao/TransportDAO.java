@@ -2,7 +2,9 @@ package team2.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import team2.entities.Maintenance;
+import team2.entities.Ticket;
 import team2.entities.Transport;
 import team2.exceptions.NotFoundException;
 
@@ -81,5 +83,31 @@ public class TransportDAO {
         System.out.println("Il veicolo con id " + id + " è stato in manutenzione per " + daysUnderMaintenance + " giorni. Nello specifico " + this.getMonths(daysUnderMaintenance) + " mesi, " + getWeeks(daysUnderMaintenance) + " settimane e " + getDays(daysUnderMaintenance) + " giorni.");
         System.out.println("Il veicolo con id " + id + " è stato in servizio per " + actualDaysOfService + " giorni. Nello specifico " + this.getYears(actualDaysOfService) + " anni, " + this.getMonths(actualDaysOfService) + " mesi, " + this.getWeeks(actualDaysOfService) + " settimane e " + this.getDays(actualDaysOfService) + " giorni.");
     }
+
+    public void countByTransportAndPeriod(long transportId, LocalDate startDate, LocalDate endDate) {
+        Transport found = this.findById(transportId);
+        if (found == null) {
+            System.out.println("Transport non trovato con id: " + transportId);
+            return;
+        }
+
+        TypedQuery<Long> query = em.createQuery(
+                        "SELECT COUNT(tt) FROM Transport tr JOIN tr.transportTravelTickets tt " +
+                                "JOIN tt.ticket t " +
+                                "WHERE tr.id = :transportId " +
+                                "AND tt.validationDate BETWEEN :startDate AND :endDate",
+                        Long.class
+                );
+        query.setParameter("transportId", transportId);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
+
+        Long count = query.getSingleResult();
+
+        System.out.println("Numero biglietti convalidati: " + count);
+    }
+
+
+
 
 }

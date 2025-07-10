@@ -3,6 +3,7 @@ package team2.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "travel_tickets")
@@ -19,6 +20,9 @@ public abstract class TravelTicket {
     @ManyToOne
     @JoinColumn(name = "reseller_id")
     private Reseller reseller;
+
+    @OneToMany(mappedBy = "ticket")
+    private List<TransportTravelTicket> transportList;
 
     public TravelTicket() {
     }

@@ -3,6 +3,7 @@ package team2.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import team2.entities.Transport;
 import team2.entities.TravelTicket;
 import team2.exceptions.NotFoundException;
 
@@ -56,6 +57,34 @@ public class TravelTicketDAO {
         System.out.println("Nel periodo di tempo inserito sono stati emessi " + count + " titoli di viaggio.");
     }
 
-//    Tieni traccia del numero di biglietti/abbonamenti emessi in un determinato periodo di tempo e per il rivenditore.
+    // Stampa dei biglietti convalidati per periodo
+    public void printValidatedTicketsByPeriod(LocalDate startDate, LocalDate endDate) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(t) FROM Ticket t WHERE t.validationDate IS NOT NULL AND t.validationDate BETWEEN :startDate AND :endDate",
+                Long.class
+        );
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
+        long count = query.getSingleResult();
+        System.out.println("Biglietti convalidati totali dal " + startDate + " al " + endDate + ": " + count);
+    }
+
+    // Stampa dei biglietti convalidati per mezzo
+    public void printValidatedTicketsByTransport(Transport transport) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(t) FROM Ticket t WHERE t.transport = :transport",
+                Long.class
+        );
+        query.setParameter("transport", transport);
+        long count = query.getSingleResult();
+        System.out.println("Biglietti convalidati sul mezzo di trasporto con ID " + transport.getTransport_id() + " sono " + count);
+    }
+
+
+
+
+
+
+
 
 }
