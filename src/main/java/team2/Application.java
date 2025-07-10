@@ -51,10 +51,10 @@ public class Application {
         Reseller atm1 = new AutomaticMachine(ResellerStatusType.IN_SERVICE, 25, 30);
         Reseller atm2 = new AutomaticMachine(ResellerStatusType.OUT_OF_ORDER, 35, 40);
 
-        //rld.save(tabacchi1);
-        //rld.save(tabacchi2);
-        //rld.save(atm1);
-        //rld.save(atm2);
+//        rld.save(tabacchi1);
+//        rld.save(tabacchi2);
+//        rld.save(atm1);
+//        rld.save(atm2);
 
         Reseller resellerFromDB = rld.findById(1);
 
@@ -64,10 +64,10 @@ public class Application {
         TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
         TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
 
-        //ttd.save(ticket1);
-        //ttd.save(ticket2);
-        //ttd.save(pass1);
-        //ttd.save(pass2);
+//        ttd.save(ticket1);
+//        ttd.save(ticket2);
+//        ttd.save(pass1);
+//        ttd.save(pass2);
 
         RouteDAO rd = new RouteDAO(em);
         Route route1 = new Route("Central Station", "Bridge", 25.10);
