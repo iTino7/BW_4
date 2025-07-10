@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import team2.entities.Reseller;
-import team2.exceptions.NotFoundException;
+import team2.exceptions.RecordNotFoundException;
 
 public class ResellerDAO {
     private final EntityManager entityManager;
@@ -23,7 +23,7 @@ public class ResellerDAO {
 
     public Reseller findById(long resellerId) {
         Reseller found = entityManager.find(Reseller.class, resellerId);
-        if (found == null) throw new NotFoundException(resellerId);
+        if (found == null) throw new RecordNotFoundException("Reseller", resellerId);
         return found;
     }
 
