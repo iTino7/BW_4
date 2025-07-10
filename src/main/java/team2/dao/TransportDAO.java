@@ -79,7 +79,7 @@ public class TransportDAO {
         long actualDaysOfService = estimatedDaysOfService - daysUnderMaintenance;
 
         System.out.println("Il veicolo con id " + id + " è stato in manutenzione per " + daysUnderMaintenance + " giorni. Nello specifico " + this.getMonths(daysUnderMaintenance) + " mesi, " + getWeeks(daysUnderMaintenance) + " settimane e " + getDays(daysUnderMaintenance) + " giorni.");
-        System.out.println("Il veicolo con id " + id + " è stato in servizio per " + actualDaysOfService + " giorni. Nello specifico" + this.getYears(actualDaysOfService) + " anni, " + this.getMonths(actualDaysOfService) + " mesi, " + this.getWeeks(actualDaysOfService) + " settimane e " + this.getDays(actualDaysOfService) + " giorni.");
+        System.out.println("Il veicolo con id " + id + " è stato in servizio per " + actualDaysOfService + " giorni. Nello specifico " + this.getYears(actualDaysOfService) + " anni, " + this.getMonths(actualDaysOfService) + " mesi, " + this.getWeeks(actualDaysOfService) + " settimane e " + this.getDays(actualDaysOfService) + " giorni.");
     }
 
 }
