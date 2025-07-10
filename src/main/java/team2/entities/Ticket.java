@@ -1,38 +1,48 @@
 package team2.entities;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
 @DiscriminatorValue("Ticket")
 public class Ticket extends TravelTicket {
-    private boolean isActive;
 
-    public Ticket() {
+    @Column(name = "validation_date")
+    private LocalDate validationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "transport_id")
+    private Transport transport;
+
+
+
+    public Ticket() {}
+
+    public Ticket(LocalDate validationDate) {
+        this.validationDate = validationDate;
     }
 
-    public Ticket(LocalDate issuedDate, Reseller reseller) {
-        super(issuedDate, reseller);
-        this.isActive = true;
+    public LocalDate getValidationDate() {
+        return validationDate;
     }
 
-    ;
-
-    public boolean isActive() {
-        return isActive;
+    public void setValidationDate(LocalDate validationDate) {
+        this.validationDate = validationDate;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    //Valida il biglietto su un determinato mezzo e imposta la data
+    public void validate(Transport transport, LocalDate date) {
+        this.validationDate = date;
+        this.transport = transport;
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
-                "isActive=" + isActive +
-                ", id=" + id +
+                "id=" + id +
+                ", transportId=" + (transport != null ? transport.getTransport_id() : "null") +
+                ", validationDate=" + validationDate +
                 '}';
     }
 }

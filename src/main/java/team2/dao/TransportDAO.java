@@ -95,7 +95,6 @@ public class TransportDAO {
                         "SELECT COUNT(tt) FROM Transport tr JOIN tr.transportTravelTickets tt " +
                                 "JOIN tt.ticket t " +
                                 "WHERE tr.id = :transportId " +
-                                "AND t.isActive = false " +
                                 "AND tt.validationDate BETWEEN :startDate AND :endDate",
                         Long.class
                 );
@@ -106,21 +105,6 @@ public class TransportDAO {
         Long count = query.getSingleResult();
 
         System.out.println("Numero biglietti convalidati: " + count);
-    }
-
-    public void invalidateTicket(long ticketId) {
-        em.getTransaction().begin();
-
-        Ticket ticket = em.find(Ticket.class, ticketId);
-        if (ticket != null && ticket.isActive()) {
-            ticket.setActive(false);
-            em.merge(ticket);
-            System.out.println("Ticket con id " + ticketId + " convalidato");
-        } else {
-            System.out.println("Ticket non trovato o già non attivo.");
-        }
-
-        em.getTransaction().commit();
     }
 
 

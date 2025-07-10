@@ -11,6 +11,7 @@ import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Application {
 
@@ -38,6 +39,10 @@ public class Application {
         TransportDAO td = new TransportDAO(em);
         Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
         Transport tram = new Tram(60, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1993, 10, 30), 276);
+        Transport tram2 = new Tram(100, TransportStatus.IN_SERVICE, LocalDate.of(2023, 9, 8), 50);
+        Transport bus2 = new Bus(80, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1999, 12, 20), 259);
+//        td.save(bus2);
+//        td.save(tram2);
 //        td.save(bus);
 //        td.save(tram);
 
@@ -58,8 +63,8 @@ public class Application {
         Reseller resellerFromDB = rld.findById(1);
 
         TravelTicketDAO ttd = new TravelTicketDAO(em);
-        TravelTicket ticket1 = new Ticket(LocalDate.now(), resellerFromDB);
-        TravelTicket ticket2 = new Ticket(LocalDate.now(), resellerFromDB);
+        TravelTicket ticket1 = new Ticket(LocalDate.now());
+        TravelTicket ticket2 = new Ticket(null);
         TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
         TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
 
@@ -111,13 +116,6 @@ public class Application {
 
         td.getServicePeriodByID(1);
 
-        td.invalidateTicket(1);
-
-        LocalDate startDate = LocalDate.of(2025, 1, 1);
-        LocalDate endDate = LocalDate.of(2025, 12, 31);
-        long transportId = 1;
-
-        td.countByTransportAndPeriod(transportId, startDate, endDate);
 
 //        System.out.println("******** CORSE **********");
 //        System.out.println("Numero di volte che un mezzo (Bus ID 1) ha percorso una tratta (Route ID 1)");
@@ -142,7 +140,54 @@ public class Application {
 //                    ") sulla tratta " + route1FromDB.getDeparturePoint() + " - " + route1FromDB.getTerminusRoute() + " .");
 //        }
 
-        em.close();
-        emf.close();
+
+
+        try {
+            em.getTransaction().begin();
+
+            // Recupera il mezzo di trasporto
+            Transport transport1 = em.find(Transport.class, 5);
+            if (transport1 == null) {
+                System.out.println("Transport non trovato. Creane uno o usa un ID esistente.");
+                return;
+            }
+
+            Ticket ticket = new Ticket();
+            LocalDate today = LocalDate.now();
+            ticket.validate(transport1, today.minusDays(2));
+
+            //Salvo il biglietto
+            em.persist(ticket);
+
+            // Crea e salva il collegamento con TransportTravelTicket
+            TransportTravelTicket ttt = new TransportTravelTicket(transport1, ticket, today);
+            em.persist(ttt);
+
+            em.getTransaction().commit();
+
+            // Imposto il periodo da considerare
+            LocalDate startDate = LocalDate.of(2025, 1, 1);
+            LocalDate endDate = LocalDate.now();
+
+            // Stampo statistiche
+            long countTotal = ttd.countValidatedTicketsByPeriod(startDate, endDate);
+            System.out.println("Biglietti convalidati totali: " + countTotal);
+
+            long countByTransport = ttd.countValidatedTicketsByTransportAndPeriod(transport1, startDate, endDate);
+            System.out.println("Biglietti convalidati sul mezzo " + transport1.getTransport_id() + ": " + countByTransport);
+
+            System.out.println("Biglietti:");
+            List<Ticket> tickets = em.createQuery("SELECT t FROM Ticket t", Ticket.class).getResultList();
+            tickets.forEach(System.out::println);
+
+        } finally {
+            em.close();
+            emf.close();
+        }
     }
 }
+
+//        em.close();
+//        emf.close();
+//    }
+

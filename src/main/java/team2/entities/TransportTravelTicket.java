@@ -16,8 +16,6 @@ public class TransportTravelTicket {
     @ManyToOne
     @JoinColumn(name = "travel_ticket_id", nullable = false)
     private TravelTicket ticket;
-    @Column(name = "validation_dates")
-    private LocalDate validationDate;
 
     public TransportTravelTicket() {
     }
@@ -25,7 +23,6 @@ public class TransportTravelTicket {
     public TransportTravelTicket(Transport transport, TravelTicket ticket, LocalDate validationDate) {
         this.transport = transport;
         this.ticket = ticket;
-        this.validationDate = validationDate;
     }
 
     public long getId() {
@@ -48,21 +45,12 @@ public class TransportTravelTicket {
         this.ticket = ticket;
     }
 
-    public LocalDate getValidationDate() {
-        return validationDate;
-    }
-
-    public void setValidationDate(LocalDate validationDate) {
-        this.validationDate = validationDate;
-    }
-
     @Override
     public String toString() {
         return "TransportTravelTicket{" +
                 "id=" + id +
                 ", transport=" + transport +
                 ", ticket=" + ticket +
-                ", validationDate=" + validationDate +
                 '}';
     }
 }
