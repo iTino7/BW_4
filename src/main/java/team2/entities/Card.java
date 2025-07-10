@@ -23,7 +23,7 @@ public class Card {
     private User owner;
 
     @OneToMany(mappedBy = "card")
-    private List<Pass> passList = new ArrayList<>();
+    private List<Pass> passList;
 
     public Card() {
     }
@@ -60,6 +60,10 @@ public class Card {
 
     public List<Pass> getPassList() {
         return passList;
+    }
+
+    public void setPassList(List<Pass> passList) {
+        this.passList = passList;
     }
 
     @Override
