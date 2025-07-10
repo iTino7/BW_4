@@ -142,9 +142,11 @@ public class Application {
             scan.nextLine();
             System.out.println("Benvenuto amministratore, seleziona un argomento: ");
             while (true) {
+                System.out.println("-- MENU' PRINCIPALE --");
                 System.out.println("1 - Biglietti e Abbonamenti.\n2 - Mezzi di trasporto.\n3 - Tratte.\n0 - Chiudi programma.");
                 int userChoice = Integer.parseInt(scan.nextLine());
                 if (userChoice == 1) {
+                    System.out.println("-- MENU' BIGLIETTI E ABBONAMENTI");
                     System.out.println("1 - Titoli di viaggio venduti in un periodo temporale.\n2 - Titoli di viaggio venduti da uno specifico rivenditore.\n0 - Torna al menù precedente.");
                     int ticketMethod = Integer.parseInt(scan.nextLine());
                     switch (ticketMethod) {
@@ -168,6 +170,7 @@ public class Application {
                             System.out.println("Devi inserire un numero valido.");
                     }
                 } else if (userChoice == 2) {
+                    System.out.println("-- MENU' MEZZI DI TRASPORTO");
                     System.out.println("1 - Biglietti vidimati in totale in un periodo temporale.\n2 - Biglietti vidimati su uno specifico mezzo di trasporto.\n3 - Periodo di servizio e di manutenzione di un mezzo di trasporto.");
                     int method = Integer.parseInt(scan.nextLine());
                     switch (method) {
@@ -197,6 +200,7 @@ public class Application {
                     }
 
                 } else if (userChoice == 3) {
+                    System.out.println("-- MENU' TRATTE --");
                     System.out.println("Ciao");
                     /* METODI PER LE TRATTE */
 
