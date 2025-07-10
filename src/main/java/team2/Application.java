@@ -60,10 +60,13 @@ public class Application {
 //        rld.save(atm2);
 
         Reseller resellerFromDB = rld.findById(1);
+        Reseller resellerFromDB2 = rld.findById(2);
+        Reseller resellerFromDB3 = rld.findById(3);
+        Reseller resellerFromDB4 = rld.findById(4);
 
         TravelTicketDAO ttd = new TravelTicketDAO(em);
-        TravelTicket ticket1 = new Ticket(LocalDate.now());
-        TravelTicket ticket2 = new Ticket(null);
+        TravelTicket ticket1 = new Ticket(LocalDate.of(2025, 1, 25), resellerFromDB, LocalDate.now());
+        TravelTicket ticket2 = new Ticket(LocalDate.of(2024, 10, 12), resellerFromDB, null);
         TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
         TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
 

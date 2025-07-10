@@ -16,10 +16,11 @@ public class Ticket extends TravelTicket {
     private Transport transport;
 
 
+    public Ticket() {
+    }
 
-    public Ticket() {}
-
-    public Ticket(LocalDate validationDate) {
+    public Ticket(LocalDate issuedDate, Reseller reseller, LocalDate validationDate) {
+        super(issuedDate, reseller);
         this.validationDate = validationDate;
     }
 
