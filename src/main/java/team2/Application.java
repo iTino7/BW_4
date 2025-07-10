@@ -11,6 +11,7 @@ import team2.entities.enums.TransportStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Application {
 
@@ -18,6 +19,7 @@ public class Application {
 
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
+        Scanner scan = new Scanner(System.in);
 
         UserDAO ud = new UserDAO(em);
         User user1 = new User("Mario Rossi");
@@ -131,7 +133,81 @@ public class Application {
         trd.averageRunTime(busFromDB, route2FromDB);
 
 
+        System.out.println("*************** INIZIO PROGRAMMA CON SCANNER *************");
+        System.out.println("Salve, sei un cliente o un amministratore ?");
+        String userType = scan.nextLine().toLowerCase();
+
+        if (userType.equals("amministratore")) {
+            System.out.println("Inserisci la password: ");
+            scan.nextLine();
+            System.out.println("Benvenuto amministratore, seleziona un argomento: ");
+            while (true) {
+                System.out.println("1 - Biglietti e Abbonamenti.\n2 - Mezzi di trasporto.\n3 - Tratte.\n0 - Chiudi programma.");
+                int userChoice = Integer.parseInt(scan.nextLine());
+                if (userChoice == 1) {
+                    System.out.println("1 - Titoli di viaggio venduti in un periodo temporale.\n2 - Titoli di viaggio venduti da uno specifico rivenditore.\n0 - Torna al menù precedente.");
+                    int ticketMethod = Integer.parseInt(scan.nextLine());
+                    switch (ticketMethod) {
+                        case 0:
+                            break;
+                        case 1: {
+                            System.out.println("Inserisci la prima data: ");
+                            LocalDate startDate = LocalDate.parse(scan.nextLine());
+                            System.out.println("Inserisci la seconda data: ");
+                            LocalDate endDate = LocalDate.parse(scan.nextLine());
+                            ttd.countTravelTicketByPeriod(startDate, endDate);
+                        }
+                        break;
+                        case 2: {
+                            System.out.println("Inserisci l'id del rivenditore: ");
+                            int resellerId = Integer.parseInt(scan.nextLine());
+                            rld.countTicketAndPassesByReseller(resellerId);
+                        }
+                        break;
+                        default:
+                            System.out.println("Devi inserire un numero valido.");
+                    }
+                } else if (userChoice == 2) {
+                    System.out.println("1 - Biglietti vidimati in totale in un periodo temporale.\n2 - Biglietti vidimati su uno specifico mezzo di trasporto.\n3 - Periodo di servizio e di manutenzione di un mezzo di trasporto.");
+                    int method = Integer.parseInt(scan.nextLine());
+                    switch (method) {
+                        case 1: {
+                            System.out.println("Inserisci la prima data: ");
+                            LocalDate startDate = LocalDate.parse(scan.nextLine());
+                            System.out.println("Inserisci la seconda data: ");
+                            LocalDate endDate = LocalDate.parse(scan.nextLine());
+                            /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
+                        }
+                        break;
+                        case 2: {
+                            System.out.println("Inserisci l'id del mezzo di trasporto: ");
+                            int transportId = Integer.parseInt(scan.nextLine());
+                            /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
+                        }
+                        break;
+                        case 3: {
+                            System.out.println("Inserisci l'id del mezzo di trasporto: ");
+                            int transportId = Integer.parseInt(scan.nextLine());
+                            td.getServicePeriodByID(transportId);
+                        }
+                        break;
+                        default: {
+                            System.out.println("Devi inserire un numero valido.");
+                        }
+                    }
+
+                } else if (userChoice == 3) {
+                    System.out.println("Ciao");
+                    /* METODI PER LE TRATTE */
+
+                } else if (userChoice == 0) {
+                    break;
+                }
+            }
+        }
+
         em.close();
         emf.close();
+        scan.close();
     }
 }
