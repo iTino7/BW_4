@@ -3,6 +3,8 @@ package team2.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cards")
@@ -19,6 +21,9 @@ public class Card {
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User owner;
+
+    @OneToMany(mappedBy = "card")
+    private List<Pass> passList = new ArrayList<>();
 
     public Card() {
     }
@@ -51,6 +56,10 @@ public class Card {
 
     public void setExpiringDate(LocalDate expiringDate) {
         this.expiringDate = expiringDate;
+    }
+
+    public List<Pass> getPassList() {
+        return passList;
     }
 
     @Override

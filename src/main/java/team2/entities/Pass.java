@@ -13,6 +13,10 @@ public class Pass extends TravelTicket {
     @Column(name = "expiring_date")
     private LocalDate expiringDate;
 
+    @ManyToOne
+    @JoinColumn(name = "card_id")
+    private Card card;
+
     public Pass() {
     }
 
