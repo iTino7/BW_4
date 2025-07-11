@@ -22,7 +22,7 @@ public class TravelTicketDAO {
         transaction.begin();
         entityManager.persist(newTicket);
         transaction.commit();
-        System.out.println("Ticket " + newTicket.toString() + " creato correttamente!");
+        System.out.println(newTicket.toString() + " creato correttamente!");
     }
 
     public TravelTicket findById(long ticketId) {

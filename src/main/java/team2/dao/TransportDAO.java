@@ -107,9 +107,14 @@ public class TransportDAO {
     }
 
     public void getAllTransports() {
-        TypedQuery<Transport> query = em.createQuery(
-                "SELECT t FROM Transport t", Transport.class);
-        query.getResultList().forEach(System.out::println);
+        TypedQuery<Transport> busQuery = em.createQuery(
+                "SELECT t FROM Transport t WHERE TYPE(t) = Bus", Transport.class);
+        TypedQuery<Transport> tramQuery = em.createQuery(
+                "SELECT t FROM Transport t WHERE TYPE(t) = Tram", Transport.class);
+        System.out.println("Bus: ");
+        busQuery.getResultList().forEach(System.out::println);
+        System.out.println("Tram: ");
+        tramQuery.getResultList().forEach(System.out::println);
     }
 
 

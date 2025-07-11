@@ -9,11 +9,13 @@ import team2.entities.enums.PassType;
 import team2.entities.enums.ResellerStatusType;
 import team2.entities.enums.TransportStatus;
 import team2.exceptions.InvalidInputException;
+import team2.exceptions.NotFoundException;
 import team2.exceptions.RecordNotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Application {
@@ -346,11 +348,16 @@ public class Application {
                                                 System.out.println("Vuoi rinnovarla? ");
                                                 String response = scan.nextLine().toLowerCase();
                                                 if (response.equals("no")) {
-                                                    System.out.println("Arrivederci !");
+                                                    System.out.println("Allora ti stamperò un biglietto!");
+                                                    TravelTicket ticket = new Ticket(LocalDate.now(), resellerFromDB3, null);
+                                                    biglietto = true;
+                                                    ttd.save(ticket);
+                                                    foundTicket = ttd.findById(ticket.getId());
+                                                    System.out.println("Biglietto erogato");
+                                                    isOn = false;
                                                     done = false;
                                                     isRunning = false;
                                                     isActive = false;
-                                                    isOn = false;
                                                     break;
                                                 } else if (response.equals("si")) {
                                                     abbonamento = true;
@@ -368,14 +375,26 @@ public class Application {
                                                 throw new InvalidInputException();
                                             }
                                             if (abbonamento) {
-                                                System.out.println("Vuoi un abbonamento mensile, settimanale o annulla? ");
-                                                String response = scan.nextLine().toLowerCase();
-                                                if (response.equals("settimanale")) {
-                                                    System.out.println("Abbonamento settimanale attivato ! ");
-                                                } else if (response.equals("mensile")) {
+                                                System.out.println("Aggiungi un abbonamento alla tua tessera: ");
+                                                System.out.println("1 - Abbonamento mensile\n2 - Abbonamento settimanale.\n3 - Nessun abbonamento ");
+                                                int response = Integer.parseInt(scan.nextLine());
+                                                if (response == 1) {
                                                     System.out.println("Abbonamento mensile attivato ! ");
-                                                } else if (response.equals("annulla")) {
-                                                    System.out.println("Arrivederci !");
+                                                    TravelTicket pass = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB2, cardFromDB);
+                                                    ttd.save(pass);
+                                                    System.out.println("Abbonamento attivato.");
+                                                } else if (response == 2) {
+                                                    System.out.println("Abbonamento settimanale attivato ! ");
+                                                    TravelTicket pass = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB2, cardFromDB);
+                                                    ttd.save(pass);
+                                                    System.out.println("Abbonamento attivato.");
+                                                } else if (response == 3) {
+                                                    System.out.println("Allora ti stamperò un biglietto!");
+                                                    TravelTicket ticket = new Ticket(LocalDate.now(), resellerFromDB3, null);
+                                                    biglietto = true;
+                                                    ttd.save(ticket);
+                                                    foundTicket = ttd.findById(ticket.getId());
+                                                    System.out.println("Biglietto erogato");
                                                     done = false;
                                                     isRunning = false;
                                                     isActive = false;
@@ -390,6 +409,8 @@ public class Application {
                                         } catch (InvalidInputException ex) {
                                             System.out.println(ex.getMessage());
                                             isOn = true;
+                                        } catch (NotFoundException e) {
+                                            System.out.println(e.getMessage());
                                         }
 
                                     }
@@ -416,14 +437,27 @@ public class Application {
                                     ud.saveUser(user);
                                     cd.saveCard(card);
 
-                                    System.out.println("Vuoi un abbonamento mensile, settimanale o annulla? ");
-                                    String resp = scan.nextLine().toLowerCase();
-                                    if (resp.equals("settimanale")) {
-                                        System.out.println("Abbonamento settimanale attivato ! ");
-                                    } else if (resp.equals("mensile")) {
+                                    System.out.println("Aggiungi un abbonamento alla tua tessera: ");
+                                    System.out.println("1 - Abbonamento mensile\n2 - Abbonamento settimanale.\n3 - Nessun abbonamento ");
+                                    int resp = Integer.parseInt(scan.nextLine());
+                                    if (resp == 1) {
                                         System.out.println("Abbonamento mensile attivato ! ");
-                                    } else if (resp.equals("annulla")) {
-                                        System.out.println("Arrivederci !");
+                                        TravelTicket pass = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB, card);
+                                        ttd.save(pass);
+                                        System.out.println(ttd.findById(pass.getId()));
+                                        System.out.println("Abbonamento attivato.");
+                                    } else if (resp == 2) {
+                                        System.out.println("Abbonamento settimanale attivato ! ");
+                                        TravelTicket pass = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB, card);
+                                        ttd.save(pass);
+                                        System.out.println("Abbonamento attivato.");
+                                    } else if (resp == 3) {
+                                        System.out.println("Allora ti stamperò un biglietto!");
+                                        TravelTicket ticket = new Ticket(LocalDate.now(), resellerFromDB4, null);
+                                        biglietto = true;
+                                        ttd.save(ticket);
+                                        foundTicket = ttd.findById(ticket.getId());
+                                        System.out.println("Biglietto erogato");
                                         done = false;
                                         isRunning = false;
                                         isActive = false;
@@ -456,11 +490,12 @@ public class Application {
                                                 isRunning = false;
                                                 isActive = false;
                                                 validDestination = false;
+                                                break;
                                             }
                                             case 1: {
                                                 Route route = rd.findRoutesByDestination("Bridge");
                                                 Transport transport = route.getTransportRouteList().getFirst().getTransports();
-                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + (int) route.getEstimatedTime());
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
@@ -474,7 +509,7 @@ public class Application {
                                             case 2: {
                                                 Route route = rd.findRoutesByDestination("Up Town");
                                                 Transport transport = route.getTransportRouteList().getFirst().getTransports();
-                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + (int) route.getEstimatedTime());
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
@@ -488,7 +523,7 @@ public class Application {
                                             case 3: {
                                                 Route route = rd.findRoutesByDestination("Lake");
                                                 Transport transport = route.getTransportRouteList().getFirst().getTransports();
-                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + (int) route.getEstimatedTime());
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
@@ -502,7 +537,7 @@ public class Application {
                                             case 4: {
                                                 Route route = rd.findRoutesByDestination("Hospital");
                                                 Transport transport = route.getTransportRouteList().getFirst().getTransports();
-                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + (int) route.getEstimatedTime());
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
@@ -534,6 +569,8 @@ public class Application {
                                 } catch (NumberFormatException ex) {
                                     System.out.println("Errore infame");
                                     validDestination = true;
+                                } catch (NoSuchElementException e) {
+                                    System.out.println("Siamo spiacenti, al momento non ci sono veicoli che portano a questa destinazione.");
                                 }
 
 

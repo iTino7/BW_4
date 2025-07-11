@@ -64,9 +64,14 @@ public class ResellerDAO {
     }
 
     public void getAllResellers() {
-        TypedQuery<Reseller> query = entityManager.createQuery(
-                "SELECT r FROM Reseller r", Reseller.class);
-        query.getResultList().forEach(System.out::println);
+        TypedQuery<Reseller> authorizedQuery = entityManager.createQuery(
+                "SELECT r FROM Reseller r WHERE TYPE(r) = AuthorizedReseller", Reseller.class);
+        TypedQuery<Reseller> atmQuery = entityManager.createQuery(
+                "SELECT r FROM Reseller r WHERE TYPE(r) = AutomaticMachine", Reseller.class);
+        System.out.println("Rivenditori Autorizzati: ");
+        authorizedQuery.getResultList().forEach(System.out::println);
+        System.out.println("Macchinette automatiche: ");
+        atmQuery.getResultList().forEach(System.out::println);
     }
 
 }
