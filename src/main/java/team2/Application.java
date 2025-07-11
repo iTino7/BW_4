@@ -39,6 +39,8 @@ public class Application {
 
         //cd.saveCard(card1);
         //cd.saveCard(card2);
+        Card foundCard1 = cd.findCardByID(1);
+        Card foundCard2 = cd.findCardByID(2);
 
         TransportDAO td = new TransportDAO(em);
         Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
@@ -214,7 +216,6 @@ public class Application {
                                 }
 
                             } else if (userChoice == 2) {
-                                // QUAAAAAAAAAAAAA
                                 boolean menu2 = true;
                                 while (menu2) {
                                     try {
@@ -230,7 +231,6 @@ public class Application {
                                                 LocalDate startDate = LocalDate.parse(scan.nextLine());
                                                 System.out.println("Inserisci la seconda data (ex. 2025-01-01): ");
                                                 LocalDate endDate = LocalDate.parse(scan.nextLine());
-                                                /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
                                                 ttd.printValidatedTicketsByPeriod(startDate, endDate);
                                                 break;
                                             }
@@ -238,7 +238,6 @@ public class Application {
                                                 System.out.println("Inserisci l'id del mezzo di trasporto: ");
                                                 int transportId = Integer.parseInt(scan.nextLine());
                                                 Transport transportFromDB = td.findById(transportId);
-                                                /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
                                                 ttd.printValidatedTicketsByTransport(transportFromDB);
                                                 break;
                                             }
@@ -265,7 +264,6 @@ public class Application {
                                 }
 
                             } else if (userChoice == 3) {
-                                //QUAAAAAAAAAAAA ************
                                 boolean menu3 = true;
                                 while (menu3) {
                                     try {
@@ -322,9 +320,226 @@ public class Application {
                             }
                         }
                     } else {
-                        System.out.println("ciao");
-                        isActive = false;
-                        break;
+                        boolean done = true;
+                        while (done) {
+                            System.out.print("Hai una tessera? (si/no): ");
+                            String risposta = scan.nextLine().toLowerCase();
+                            boolean abbonamento = false;
+                            boolean biglietto = false;
+                            TravelTicket foundTicket = null;
+
+                            switch (risposta) {
+                                case "sì":
+                                case "si": {
+                                    boolean isOn = true;
+                                    while (isOn) {
+                                        try {
+                                            System.out.println("Inserisci il numero della tua tessera");
+                                            int cardId = Integer.parseInt(scan.nextLine());
+
+                                            Card cardFromDB = cd.findCardByID(cardId);
+                                            System.out.println("Verifica validità in corso...");
+                                            long userId = cardFromDB.getOwner().getId();
+                                            String check = ud.checkCardValidity(userId);
+
+                                            if (check.equals("Scaduta")) {
+                                                System.out.println("Vuoi rinnovarla? ");
+                                                String response = scan.nextLine().toLowerCase();
+                                                if (response.equals("no")) {
+                                                    System.out.println("Arrivederci !");
+                                                    done = false;
+                                                    isRunning = false;
+                                                    isActive = false;
+                                                    isOn = false;
+                                                    break;
+                                                } else if (response.equals("si")) {
+                                                    abbonamento = true;
+                                                    isOn = false;
+                                                } else {
+                                                    throw new InvalidInputException();
+                                                }
+                                            } else if (check.equals("noPass")) {
+                                                abbonamento = true;
+                                                isOn = false;
+                                            } else if (check.equals("yesPass")) {
+                                                isOn = false;
+                                                continue;
+                                            } else {
+                                                throw new InvalidInputException();
+                                            }
+                                            if (abbonamento) {
+                                                System.out.println("Vuoi un abbonamento mensile, settimanale o annulla? ");
+                                                String response = scan.nextLine().toLowerCase();
+                                                if (response.equals("settimanale")) {
+                                                    System.out.println("Abbonamento settimanale attivato ! ");
+                                                } else if (response.equals("mensile")) {
+                                                    System.out.println("Abbonamento mensile attivato ! ");
+                                                } else if (response.equals("annulla")) {
+                                                    System.out.println("Arrivederci !");
+                                                    done = false;
+                                                    isRunning = false;
+                                                    isActive = false;
+                                                } else {
+                                                    throw new InvalidInputException();
+                                                }
+                                            }
+
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Devi inserire un numero ! ");
+
+                                        } catch (InvalidInputException ex) {
+                                            System.out.println(ex.getMessage());
+                                            isOn = true;
+                                        }
+
+                                    }
+
+
+                                    break;
+                                }
+                                case "no":
+                                    System.out.println("Vuoi creare una nuova tessera o comprare un biglietto singolo ? ");
+                                    break;
+                                default:
+                                    System.out.println("Risposta non valida. Scrivi 'sì' o 'no'.");
+                                    continue;
+                            }
+                            if (risposta.equals("no")) {
+                                String response = scan.nextLine().toLowerCase();
+
+                                if (response.equals("tessera")) {
+                                    System.out.println("Inserisci il tuo nome completo: ");
+                                    String username = scan.nextLine();
+                                    User user = new User(username);
+
+                                    Card card = new Card(LocalDate.now(), user);
+                                    ud.saveUser(user);
+                                    cd.saveCard(card);
+
+                                    System.out.println("Vuoi un abbonamento mensile, settimanale o annulla? ");
+                                    String resp = scan.nextLine().toLowerCase();
+                                    if (resp.equals("settimanale")) {
+                                        System.out.println("Abbonamento settimanale attivato ! ");
+                                    } else if (resp.equals("mensile")) {
+                                        System.out.println("Abbonamento mensile attivato ! ");
+                                    } else if (resp.equals("annulla")) {
+                                        System.out.println("Arrivederci !");
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                    } else {
+                                        throw new InvalidInputException();
+                                    }
+                                } else if (response.equals("biglietto")) {
+                                    TravelTicket ticket = new Ticket(null);
+                                    biglietto = true;
+                                    ttd.save(ticket);
+                                    foundTicket = ttd.findById(ticket.getId());
+                                    System.out.println("Biglietto erogato");
+                                } else {
+                                    throw new InvalidInputException();
+                                }
+                            }
+                            boolean validDestination = true;
+                            while (validDestination) {
+                                try {
+                                    System.out.println("Vuoi raggiungere qualche destinazione ?");
+                                    String resp = scan.nextLine();
+                                    if (resp.equals("si")) {
+                                        System.out.println("Scegli la destinazione: ");
+                                        System.out.println("1 - Bridge.\n2 - Up Town.\n3 - Lake.\n4 - Hospital. \n0 - Annulla");
+                                        int choice = Integer.parseInt(scan.nextLine());
+                                        switch (choice) {
+                                            case 0: {
+                                                System.out.println("Arrivederci !");
+                                                done = false;
+                                                isRunning = false;
+                                                isActive = false;
+                                                validDestination = false;
+                                            }
+                                            case 1: {
+                                                Route route = rd.findRoutesByDestination("Bridge");
+                                                Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                if (biglietto) {
+                                                    ((Ticket) foundTicket).setTransport(transport);
+                                                    ttd.validate((Ticket) foundTicket);
+                                                }
+                                                done = false;
+                                                isRunning = false;
+                                                isActive = false;
+                                                validDestination = false;
+                                                break;
+                                            }
+                                            case 2: {
+                                                Route route = rd.findRoutesByDestination("Up Town");
+                                                Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                if (biglietto) {
+                                                    ((Ticket) foundTicket).setTransport(transport);
+                                                    ttd.validate((Ticket) foundTicket);
+                                                }
+                                                done = false;
+                                                isRunning = false;
+                                                isActive = false;
+                                                validDestination = false;
+                                                break;
+                                            }
+                                            case 3: {
+                                                Route route = rd.findRoutesByDestination("Lake");
+                                                Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                if (biglietto) {
+                                                    ((Ticket) foundTicket).setTransport(transport);
+                                                    ttd.validate((Ticket) foundTicket);
+                                                }
+                                                done = false;
+                                                isRunning = false;
+                                                isActive = false;
+                                                validDestination = false;
+                                                break;
+                                            }
+                                            case 4: {
+                                                Route route = rd.findRoutesByDestination("Hospital");
+                                                Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                                System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                                if (biglietto) {
+                                                    ((Ticket) foundTicket).setTransport(transport);
+                                                    ttd.validate((Ticket) foundTicket);
+                                                }
+                                                done = false;
+                                                isRunning = false;
+                                                isActive = false;
+                                                validDestination = false;
+                                                break;
+                                            }
+                                            default:
+                                                throw new InvalidInputException();
+                                        }
+                                    } else if (resp.equals("no")) {
+                                        System.out.println("Arrivederci!");
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                        validDestination = false;
+                                        break;
+                                    } else {
+                                        throw new InvalidInputException();
+                                    }
+
+                                } catch (InvalidInputException e) {
+                                    System.out.println(e.getMessage());
+                                    validDestination = true;
+
+                                } catch (NumberFormatException ex) {
+                                    System.out.println("Errore infame");
+                                    validDestination = true;
+                                }
+
+
+                            }
+
+                        }
                     }
                 } catch (InvalidInputException | RecordNotFoundException e) {
                     System.out.println(e.getMessage());

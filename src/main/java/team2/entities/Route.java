@@ -60,6 +60,10 @@ public class Route {
         this.estimatedTime = estimatedTime;
     }
 
+    public List<TransportRoute> getTransportRouteList() {
+        return transportRouteList;
+    }
+
     @Override
     public String toString() {
         return "Route{" +

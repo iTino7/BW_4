@@ -32,9 +32,11 @@ public class Ticket extends TravelTicket {
         this.validationDate = validationDate;
     }
 
-    //Valida il biglietto su un determinato mezzo e imposta la data
-    public void validate(Transport transport, LocalDate date) {
-        this.validationDate = date;
+    public Transport getTransport() {
+        return transport;
+    }
+
+    public void setTransport(Transport transport) {
         this.transport = transport;
     }
 
