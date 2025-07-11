@@ -210,7 +210,6 @@ public class Application {
                                 }
 
                             } else if (userChoice == 2) {
-                                // QUAAAAAAAAAAAAA
                                 boolean menu2 = true;
                                 while (menu2) {
                                     try {
@@ -226,7 +225,6 @@ public class Application {
                                                 LocalDate startDate = LocalDate.parse(scan.nextLine());
                                                 System.out.println("Inserisci la seconda data (ex. 2025-01-01): ");
                                                 LocalDate endDate = LocalDate.parse(scan.nextLine());
-                                                /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
                                                 ttd.printValidatedTicketsByPeriod(startDate, endDate);
                                             }
                                             break;
@@ -234,7 +232,6 @@ public class Application {
                                                 System.out.println("Inserisci l'id del mezzo di trasporto: ");
                                                 int transportId = Integer.parseInt(scan.nextLine());
                                                 Transport transportFromDB = td.findById(transportId);
-                                                /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
                                                 ttd.printValidatedTicketsByTransport(transportFromDB);
                                             }
                                             break;
@@ -258,7 +255,6 @@ public class Application {
                                 }
 
                             } else if (userChoice == 3) {
-                                //QUAAAAAAAAAAAA ************
                                 boolean menu3 = true;
                                 while (menu3) {
                                     try {
@@ -313,6 +309,8 @@ public class Application {
                             System.out.print("Hai una tessera? (si/no): ");
                             String risposta = scan.nextLine().toLowerCase();
                             boolean abbonamento = false;
+                            boolean biglietto = false;
+                            TravelTicket foundTicket = null;
 
                             switch (risposta) {
                                 case "sì":
@@ -400,8 +398,79 @@ public class Application {
                                     }
                                 } else if (response.equals("biglietto")) {
                                     TravelTicket ticket = new Ticket(null);
+                                    biglietto = true;
                                     ttd.save(ticket);
+                                    foundTicket = ttd.findById(ticket.getId());
                                     System.out.println("Biglietto erogato");
+                                }
+                            }
+                            System.out.println("Vuoi raggiungere qualche destinazione ?");
+                            String resp = scan.nextLine();
+                            if (resp.equals("si")) {
+                                System.out.println("Scegli la destinazione: ");
+                                System.out.println("1 - Bridge.\n2 - Up Town.\n3 - Lake.\n4 - Hospital. \n0 - Annulla");
+                                int choice = Integer.parseInt(scan.nextLine());
+                                switch (choice) {
+                                    case 0: {
+                                        System.out.println("Arrivederci !");
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                    }
+                                    case 1: {
+                                        Route route = rd.findRoutesByDestination("Bridge");
+                                        Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                        System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                        if (biglietto) {
+                                            ((Ticket) foundTicket).setTransport(transport);
+                                            ttd.validate((Ticket) foundTicket);
+                                        }
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                        break;
+                                    }
+                                    case 2: {
+                                        Route route = rd.findRoutesByDestination("Up Town");
+                                        Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                        System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                        if (biglietto) {
+                                            ((Ticket) foundTicket).setTransport(transport);
+                                            ttd.validate((Ticket) foundTicket);
+                                        }
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                        break;
+                                    }
+                                    case 3: {
+                                        Route route = rd.findRoutesByDestination("Lake");
+                                        Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                        System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                        if (biglietto) {
+                                            ((Ticket) foundTicket).setTransport(transport);
+                                            ttd.validate((Ticket) foundTicket);
+                                        }
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                        break;
+                                    }
+                                    case 4: {
+                                        Route route = rd.findRoutesByDestination("Hospital");
+                                        Transport transport = route.getTransportRouteList().getFirst().getTransports();
+                                        System.out.println("Puoi prendere questo mezzo con id " + transport.getTransport_id() + " che parte da " + route.getDeparturePoint() + " e ti porterà a " + route.getTerminusRoute() + " in circa " + route.getEstimatedTime());
+                                        if (biglietto) {
+                                            ((Ticket) foundTicket).setTransport(transport);
+                                            ttd.validate((Ticket) foundTicket);
+                                        }
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                        break;
+                                    }
+
+
                                 }
                             }
 

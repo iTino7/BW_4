@@ -2,6 +2,7 @@ package team2.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import team2.entities.Route;
 import team2.exceptions.RecordNotFoundException;
 
@@ -28,5 +29,11 @@ public class RouteDAO {
 
     // public void findByIdAndDelete(long routeId) {}
 
+    public Route findRoutesByDestination(String destination) {
+        TypedQuery<Route> query = entityManager.createQuery(
+                "SELECT r FROM Route r WHERE r.terminusRoute = :destination", Route.class);
+        query.setParameter("destination", destination);
+        return query.getSingleResultOrNull();
+    }
 
 }

@@ -3,6 +3,7 @@ package team2.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import team2.entities.Ticket;
 import team2.entities.Transport;
 import team2.entities.TravelTicket;
 import team2.exceptions.NotFoundException;
@@ -45,6 +46,13 @@ public class TravelTicketDAO {
 
     }
 
+    //Valida il biglietto su un determinato mezzo e imposta la data
+    public void validate(Ticket ticket) {
+        ticket.setValidationDate(LocalDate.now());
+        System.out.println("Biglietto Convalidato");
+        System.out.println(ticket);
+    }
+
     public void countTravelTicketByPeriod(LocalDate startDate, LocalDate endDate) {
 
         TypedQuery<Long> query = entityManager.createQuery(
@@ -79,12 +87,6 @@ public class TravelTicketDAO {
         long count = query.getSingleResult();
         System.out.println("Biglietti convalidati sul mezzo di trasporto con ID " + transport.getTransport_id() + " sono " + count);
     }
-
-
-
-
-
-
 
 
 }
