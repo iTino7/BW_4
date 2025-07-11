@@ -312,10 +312,11 @@ public class Application {
                         while (done) {
                             System.out.print("Hai una tessera? (si/no): ");
                             String risposta = scan.nextLine().toLowerCase();
+                            boolean abbonamento = false;
 
                             switch (risposta) {
                                 case "sì":
-                                case "si":
+                                case "si": {
                                     System.out.println("Inserisci il numero della tua tessera");
                                     int cardId = Integer.parseInt(scan.nextLine());
                                     Card cardFromDB = cd.findCardByID(cardId);
@@ -333,30 +334,75 @@ public class Application {
                                             isActive = false;
                                             break;
                                         } else if (response.equals("si")) {
-                                            continue;
+                                            abbonamento = true;
                                         } else {
                                             throw new InvalidInputException();
                                         }
                                     } else if (check.equals("noPass")) {
-                                        System.out.println("Vuoi un abbonamento mensile o settimanale? ");
+                                        abbonamento = true;
+                                    } else if (check.equals("yesPass")) {
+                                        continue;
+                                    } else {
+                                        throw new InvalidInputException();
+                                    }
+                                    if (abbonamento) {
+                                        System.out.println("Vuoi un abbonamento mensile, settimanale o annulla? ");
                                         String response = scan.nextLine().toLowerCase();
                                         if (response.equals("settimanale")) {
                                             System.out.println("Abbonamento settimanale attivato ! ");
                                         } else if (response.equals("mensile")) {
                                             System.out.println("Abbonamento mensile attivato ! ");
+                                        } else if (response.equals("annulla")) {
+                                            System.out.println("Arrivederci !");
+                                            done = false;
+                                            isRunning = false;
+                                            isActive = false;
                                         } else {
                                             throw new InvalidInputException();
                                         }
                                     }
+                                }
 
 
-                                    break;
+                                break;
                                 case "no":
-                                    System.out.println("Hai risposto no.");
+                                    System.out.println("Vuoi creare una nuova tessera o comprare un biglietto singolo ? ");
                                     break;
                                 default:
                                     System.out.println("Risposta non valida. Scrivi 'sì' o 'no'.");
                                     break;
+                            }
+                            if (risposta.equals("no")) {
+                                String response = scan.nextLine().toLowerCase();
+
+                                if (response.equals("tessera")) {
+                                    System.out.println("Inserisci il tuo nome completo: ");
+                                    String username = scan.nextLine();
+                                    User user = new User(username);
+
+                                    Card card = new Card(LocalDate.now(), user);
+                                    ud.saveUser(user);
+                                    cd.saveCard(card);
+
+                                    System.out.println("Vuoi un abbonamento mensile, settimanale o annulla? ");
+                                    String resp = scan.nextLine().toLowerCase();
+                                    if (resp.equals("settimanale")) {
+                                        System.out.println("Abbonamento settimanale attivato ! ");
+                                    } else if (resp.equals("mensile")) {
+                                        System.out.println("Abbonamento mensile attivato ! ");
+                                    } else if (resp.equals("annulla")) {
+                                        System.out.println("Arrivederci !");
+                                        done = false;
+                                        isRunning = false;
+                                        isActive = false;
+                                    } else {
+                                        throw new InvalidInputException();
+                                    }
+                                } else if (response.equals("biglietto")) {
+                                    TravelTicket ticket = new Ticket(null);
+                                    ttd.save(ticket);
+                                    System.out.println("Biglietto erogato");
+                                }
                             }
 
                         }
