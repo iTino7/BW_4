@@ -190,18 +190,17 @@ public class Application {
                                                 System.out.println("Inserisci la seconda data (ex. 2025-01-01): ");
                                                 LocalDate endDate = LocalDate.parse(scan.nextLine());
                                                 ttd.countTravelTicketByPeriod(startDate, endDate);
+                                                break;
                                             }
-                                            break;
                                             case 2: {
                                                 System.out.println("Inserisci l'id del rivenditore: ");
                                                 int resellerId = Integer.parseInt(scan.nextLine());
                                                 rld.countTicketAndPassesByReseller(resellerId);
+                                                break;
                                             }
-                                            break;
-                                            case 3: {
+                                            case 3:
                                                 rld.getAllResellers();
-                                            }
-                                            break;
+                                                break;
                                             default:
                                                 System.out.println("Devi inserire un numero valido.");
                                         }
@@ -233,26 +232,25 @@ public class Application {
                                                 LocalDate endDate = LocalDate.parse(scan.nextLine());
                                                 /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
                                                 ttd.printValidatedTicketsByPeriod(startDate, endDate);
+                                                break;
                                             }
-                                            break;
                                             case 2: {
                                                 System.out.println("Inserisci l'id del mezzo di trasporto: ");
                                                 int transportId = Integer.parseInt(scan.nextLine());
                                                 Transport transportFromDB = td.findById(transportId);
                                                 /* QUA VA RICHIAMATO IL METODO UNA VOLTA COMPLETATO */
                                                 ttd.printValidatedTicketsByTransport(transportFromDB);
+                                                break;
                                             }
-                                            break;
                                             case 3: {
                                                 System.out.println("Inserisci l'id del mezzo di trasporto: ");
                                                 int transportId = Integer.parseInt(scan.nextLine());
                                                 td.getServicePeriodByID(transportId);
-                                            }
-                                            break;
-                                            case 4: {
-                                                td.getAllTransports();
                                                 break;
                                             }
+                                            case 4:
+                                                td.getAllTransports();
+                                                break;
                                             default: {
                                                 System.out.println("Devi inserire un numero valido.");
                                             }
@@ -286,8 +284,8 @@ public class Application {
                                                 int routeId = Integer.parseInt(scan.nextLine());
                                                 Route routeFromDB = rd.findById(routeId);
                                                 trd.averageRunTime(transportFromDB, routeFromDB);
+                                                break;
                                             }
-                                            break;
                                             case 2: {
                                                 System.out.println("Inserisci l'id del mezzo di trasporto: ");
                                                 int transportId = Integer.parseInt(scan.nextLine());
@@ -296,12 +294,12 @@ public class Application {
                                                 int routeId = Integer.parseInt(scan.nextLine());
                                                 Route routeFromDB = rd.findById(routeId);
                                                 trd.countNumberOfRuns(transportFromDB, routeFromDB);
+                                                break;
                                             }
-                                            break;
-                                            case 3: {
+                                            case 3:
                                                 rd.getAllRoutes();
-                                            }
-                                            break;
+                                                break;
+
                                             default:
                                                 break;
                                         }

@@ -34,4 +34,10 @@ public class RouteDAO {
         query.getResultList().forEach(System.out::println);
     }
 
+    public Route findRoutesByDestination(String destination) {
+        TypedQuery<Route> query = entityManager.createQuery(
+                "SELECT r FROM Route r WHERE r.terminusRoute = :destination", Route.class);
+        query.setParameter("destination", destination);
+        return query.getSingleResultOrNull();
+    }
 }
