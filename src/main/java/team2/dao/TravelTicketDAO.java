@@ -50,7 +50,6 @@ public class TravelTicketDAO {
     public void validate(Ticket ticket) {
         ticket.setValidationDate(LocalDate.now());
         System.out.println("Biglietto Convalidato");
-        System.out.println(ticket);
     }
 
     public void countTravelTicketByPeriod(LocalDate startDate, LocalDate endDate) {

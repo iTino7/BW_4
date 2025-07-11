@@ -2,6 +2,7 @@ package team2;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import team2.dao.*;
 import team2.entities.*;
@@ -46,9 +47,13 @@ public class Application {
 
         TransportDAO td = new TransportDAO(em);
         Transport bus = new Bus(40, TransportStatus.IN_SERVICE, LocalDate.of(2024, 12, 10), 100);
-        Transport tram = new Tram(60, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(1993, 10, 30), 276);
+        Transport bus2 = new Bus(50, TransportStatus.IN_SERVICE, LocalDate.of(2018, 10, 1), 1518);
+        Transport tram = new Tram(60, TransportStatus.IN_SERVICE, LocalDate.of(1993, 10, 30), 276);
+        Transport tram2 = new Tram(75, TransportStatus.UNDER_MAINTENANCE, LocalDate.of(2001, 9, 1), 128);
         //td.save(bus);
         //td.save(tram);
+        //td.save(bus2);
+        //td.save(tram2);
         Transport busFromDB = td.findById(1);
         Transport tramFromDB = td.findById(2);
 
@@ -337,6 +342,13 @@ public class Application {
                                                     isActive = false;
                                                     break;
                                                 } else if (response.equals("si")) {
+                                                    cardFromDB.setActivationDate(LocalDate.now());
+                                                    cardFromDB.setExpiringDate(LocalDate.now().plusYears(1));
+                                                    EntityTransaction transaction = em.getTransaction();
+                                                    transaction.begin();
+                                                    em.persist(cardFromDB);
+                                                    transaction.commit();
+                                                    System.out.println("Carta rinnovata correttamente.");
                                                     abbonamento = true;
                                                     isOn = false;
                                                 } else {
@@ -476,6 +488,7 @@ public class Application {
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
+                                                    ttd.save(foundTicket);
                                                 }
                                                 done = false;
                                                 isRunning = false;
@@ -490,6 +503,7 @@ public class Application {
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
+                                                    ttd.save(foundTicket);
                                                 }
                                                 done = false;
                                                 isRunning = false;
@@ -504,6 +518,7 @@ public class Application {
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
+                                                    ttd.save(foundTicket);
                                                 }
                                                 done = false;
                                                 isRunning = false;
@@ -518,6 +533,11 @@ public class Application {
                                                 if (biglietto) {
                                                     ((Ticket) foundTicket).setTransport(transport);
                                                     ttd.validate((Ticket) foundTicket);
+                                                    EntityTransaction transaction = em.getTransaction();
+                                                    transaction.begin();
+                                                    em.persist(foundTicket);
+                                                    transaction.commit();
+                                                    System.out.println(foundTicket.toString() + " vidimato correttamente!");
                                                 }
                                                 done = false;
                                                 isRunning = false;
