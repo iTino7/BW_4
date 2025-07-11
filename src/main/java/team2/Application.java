@@ -119,31 +119,8 @@ public class Application {
         //trd.save(transportRoutes7);
         //trd.save(transportRoutes8);
 
+        System.out.println("***************  BENVENUTO ALL'KTSM  *************");
 
-        System.out.println("**************** METODO CERCA N.OF TICKET *******************");
-
-        rld.countTicketAndPassesByReseller(1);
-        ttd.countTravelTicketByPeriod(LocalDate.of(2025, 1, 1), LocalDate.of(2025, 12, 31));
-
-        System.out.println("************ MAINTENANCES PER VEHICLE ************");
-
-        //td.getServicePeriodByID(1);
-
-
-        System.out.println("**************** CORSE *******************");
-
-        System.out.println("numero di tratte");
-        trd.countNumberOfRuns(busFromDB, route1FromDB);
-        trd.countNumberOfRuns(tramFromDB, route1FromDB);
-        trd.countNumberOfRuns(busFromDB, route2FromDB);
-
-        System.out.println("tempo medio di tratte");
-        trd.averageRunTime(busFromDB, route1FromDB);
-        trd.averageRunTime(tramFromDB, route1FromDB);
-        trd.averageRunTime(busFromDB, route2FromDB);
-
-
-        System.out.println("*************** INIZIO PROGRAMMA CON SCANNER *************");
         boolean isActive = true;
         boolean isRunning = true;
 
