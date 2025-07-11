@@ -69,8 +69,8 @@ public class Application {
         TravelTicketDAO ttd = new TravelTicketDAO(em);
         TravelTicket ticket1 = new Ticket(LocalDate.of(2025, 1, 25), resellerFromDB, LocalDate.now());
         TravelTicket ticket2 = new Ticket(LocalDate.of(2024, 10, 12), resellerFromDB, null);
-        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB);
-        TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB);
+        TravelTicket pass1 = new Pass(PassType.MONTHLY, LocalDate.now().plusMonths(1), LocalDate.now(), resellerFromDB, foundCard1);
+        TravelTicket pass2 = new Pass(PassType.WEEKLY, LocalDate.now().plusDays(7), LocalDate.now(), resellerFromDB, foundCard2);
 
 //        ttd.save(ticket1);
 //        ttd.save(ticket2);
@@ -431,7 +431,7 @@ public class Application {
                                         throw new InvalidInputException();
                                     }
                                 } else if (response.equals("biglietto")) {
-                                    TravelTicket ticket = new Ticket(null);
+                                    TravelTicket ticket = new Ticket(LocalDate.now(), resellerFromDB4, null);
                                     biglietto = true;
                                     ttd.save(ticket);
                                     foundTicket = ttd.findById(ticket.getId());
