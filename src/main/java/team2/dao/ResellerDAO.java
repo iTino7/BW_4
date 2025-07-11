@@ -63,4 +63,10 @@ public class ResellerDAO {
         System.out.println("Il venditore con id " + resellerId + " ha venduto " + (passCount + found.getIssuedPasses()) + " abbonamenti e " + (ticketCount + found.getIssuedTicket()) + " biglietti.");
     }
 
+    public void getAllResellers() {
+        TypedQuery<Reseller> query = entityManager.createQuery(
+                "SELECT r FROM Reseller r", Reseller.class);
+        query.getResultList().forEach(System.out::println);
+    }
+
 }

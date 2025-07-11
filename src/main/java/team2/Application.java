@@ -151,7 +151,7 @@ public class Application {
                 if (userType.equals("amministratore")) {
                     System.out.println("Inserisci la password: ");
                     scan.nextLine();
-                    System.out.println("Benvenuto amministratore, seleziona un argomento: ");
+                    System.out.println("Benvenuto, seleziona un argomento: ");
                 } else if (userType.equals("cliente")) {
                     System.out.println("Buongiorno!");
                 } else {
@@ -177,7 +177,7 @@ public class Application {
                                 while (menu1) {
                                     try {
                                         System.out.println("-- MENU' BIGLIETTI E ABBONAMENTI");
-                                        System.out.println("1 - Titoli di viaggio venduti in un periodo temporale.\n2 - Titoli di viaggio venduti da uno specifico rivenditore.\n0 - Torna al menù precedente.");
+                                        System.out.println("1 - Titoli di viaggio venduti in un periodo temporale.\n2 - Titoli di viaggio venduti da uno specifico rivenditore.\n3 - Elenco rivenditori.\n0 - Torna al menù precedente.");
                                         int ticketMethod = Integer.parseInt(scan.nextLine());
                                         switch (ticketMethod) {
                                             case 0:
@@ -198,6 +198,10 @@ public class Application {
                                                 rld.countTicketAndPassesByReseller(resellerId);
                                             }
                                             break;
+                                            case 3: {
+                                                rld.getAllResellers();
+                                            }
+                                            break;
                                             default:
                                                 System.out.println("Devi inserire un numero valido.");
                                         }
@@ -216,7 +220,7 @@ public class Application {
                                 while (menu2) {
                                     try {
                                         System.out.println("-- MENU' MEZZI DI TRASPORTO");
-                                        System.out.println("1 - Biglietti vidimati in totale in un periodo temporale.\n2 - Biglietti vidimati su uno specifico mezzo di trasporto.\n3 - Periodo di servizio e di manutenzione di un mezzo di trasporto.\n0 - Torna al menù precedente.");
+                                        System.out.println("1 - Biglietti vidimati in totale in un periodo temporale.\n2 - Biglietti vidimati su uno specifico mezzo di trasporto.\n3 - Periodo di servizio e di manutenzione di un mezzo di trasporto.\n4 - Elenco dei mezzi di transporto.\n0 - Torna al menù precedente.");
                                         int method = Integer.parseInt(scan.nextLine());
                                         switch (method) {
                                             case 0:
@@ -245,6 +249,10 @@ public class Application {
                                                 td.getServicePeriodByID(transportId);
                                             }
                                             break;
+                                            case 4: {
+                                                td.getAllTransports();
+                                                break;
+                                            }
                                             default: {
                                                 System.out.println("Devi inserire un numero valido.");
                                             }
@@ -264,7 +272,7 @@ public class Application {
                                 while (menu3) {
                                     try {
                                         System.out.println("-- MENU' TRATTE --");
-                                        System.out.println("1 - Tempo medio di percorrenza di una tratta.\n2 - Numero di volte in cui un mezzo ha percorso una tratta.\n0 - Torna al menù precedente.");
+                                        System.out.println("1 - Tempo medio di percorrenza di una tratta.\n2 - Numero di volte in cui un mezzo ha percorso una tratta.\n3 - Elenco delle tratte.\n0 - Torna al menù precedente.");
                                         int method = Integer.parseInt(scan.nextLine());
                                         switch (method) {
                                             case 0:
@@ -289,6 +297,13 @@ public class Application {
                                                 Route routeFromDB = rd.findById(routeId);
                                                 trd.countNumberOfRuns(transportFromDB, routeFromDB);
                                             }
+                                            break;
+                                            case 3: {
+                                                rd.getAllRoutes();
+                                            }
+                                            break;
+                                            default:
+                                                break;
                                         }
                                     } catch (InvalidInputException | RecordNotFoundException e) {
                                         System.out.println(e.getMessage());

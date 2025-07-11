@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import team2.entities.Maintenance;
-import team2.entities.Ticket;
 import team2.entities.Transport;
 import team2.exceptions.RecordNotFoundException;
 
@@ -92,12 +91,12 @@ public class TransportDAO {
         }
 
         TypedQuery<Long> query = em.createQuery(
-                        "SELECT COUNT(tt) FROM Transport tr JOIN tr.transportTravelTickets tt " +
-                                "JOIN tt.ticket t " +
-                                "WHERE tr.id = :transportId " +
-                                "AND tt.validationDate BETWEEN :startDate AND :endDate",
-                        Long.class
-                );
+                "SELECT COUNT(tt) FROM Transport tr JOIN tr.transportTravelTickets tt " +
+                        "JOIN tt.ticket t " +
+                        "WHERE tr.id = :transportId " +
+                        "AND tt.validationDate BETWEEN :startDate AND :endDate",
+                Long.class
+        );
         query.setParameter("transportId", transportId);
         query.setParameter("startDate", startDate);
         query.setParameter("endDate", endDate);
@@ -107,7 +106,11 @@ public class TransportDAO {
         System.out.println("Numero biglietti convalidati: " + count);
     }
 
-
+    public void getAllTransports() {
+        TypedQuery<Transport> query = em.createQuery(
+                "SELECT t FROM Transport t", Transport.class);
+        query.getResultList().forEach(System.out::println);
+    }
 
 
 }
